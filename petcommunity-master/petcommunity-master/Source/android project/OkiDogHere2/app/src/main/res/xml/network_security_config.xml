@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <base-config>
+        <base includeSubdomains="true">dapi.kakao.com</base>
+        <base includeSubdomains="true">daumcdn.net</base>
+        <base-config cleartextTrafficPermitted="true"/>
+    </base-config>
+</network-security-config>

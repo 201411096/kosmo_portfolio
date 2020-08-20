@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admin">
+
+	<select id="adminselectList" parameterType="buylistview"
+		resultType="buylistview">
+		SELECT BUYLIST_DATE, PRODUCT_NAME, BUY_CNT, BUY_TOTALPRICE,
+		PRODUCT_ID
+		FROM BUYLISTVIEW
+		ORDER BY BUYLIST_DATE desc
+	</select>
+
+	<select id="getSearchDate" parameterType="map"
+		resultType="buylistview">
+		select BUYLIST_DATE, PRODUCT_NAME, BUY_CNT, BUY_TOTALPRICE, PRODUCT_ID
+		from BUYLISTVIEW
+		<![CDATA[
+		WHERE BUYLIST_DATE >= to_date(#{startDate},'YYYY-MM-DD')
+		AND BUYLIST_DATE <= to_date(#{endDate},'YYYY-MM-DD')
+		]]>
+		ORDER BY BUYLIST_DATE desc
+	</select>
+
+
+	<select id="getMemberList" parameterType="member"
+		resultType="member">
+		SELECT MEMBER_ID, MEMBER_NAME, MEMBER_ADDRESS, MEMBER_TEL,
+		MEMBER_EMAIL
+		FROM MEMBER
+		WHERE MEMBER_FLAG=0
+	</select>
+
+	<select id="getMemberSelect" parameterType="map"
+		resultType="member">
+		SELECT MEMBER_ID, MEMBER_NAME, MEMBER_ADDRESS, MEMBER_TEL,
+		MEMBER_EMAIL
+		FROM MEMBER
+		<if test="combobox==0">
+			WHERE member_id like '%'||#{searchword}||'%'
+		</if>
+		<if test="combobox==1">
+			WHERE member_name like '%'||#{searchword}||'%'
+		</if>
+		<if test="combobox==2">
+			WHERE member_address like '%'||#{searchword}||'%'
+		</if>
+	</select>
+
+	<delete id="deleteInfo" parameterType="String">
+		DELETE
+		FROM member
+		WHERE
+		member_id=#{memberId}
+	</delete>
+
+	<insert id="managerInsert" parameterType="map">
+
+		insert into manager values(#{hiredate},#{dept},#{memberId})
+	</insert>
+	
+	<update id="managerUpdate" parameterType="map">
+	update manager set MANAGER_DEPT=#{dept} , MANAGER_HIREDATE=#{hiredate} where MEMBER_ID=#{memberId}
+	</update>
+
+
+	<select id="managerSelect" resultType="manager">
+		select a.member_id memberId,a.manager_dept managerDept,TO_CHAR(a.manager_hiredate,'YYYY-MM-DD') managerHiredate
+		,m.member_name memberName,m.member_tel memberTel
+		from manager a , member m
+		where a.member_id=m.member_id
+	</select>
+	
+	<select id="checkId" parameterType="String" resultType="manager">
+	select * from manager where member_id= #{id}
+	</select>
+	
+	<delete id="managerDelete" parameterType="String">
+	delete manager where member_id=#{id}
+	</delete>
+
+</mapper>

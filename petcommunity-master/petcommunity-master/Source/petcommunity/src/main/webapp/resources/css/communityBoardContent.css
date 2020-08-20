@@ -1,0 +1,103 @@
+@charset "UTF-8";
+
+
+
+#communityContentTitle{
+	color : #03C75A;
+	font-size:25px;
+}
+
+#communityContentWriter{
+	font-size:19px;
+	font-weight: 700;
+}
+
+#communityContentTime{
+	font-size:19px;
+	color : #979797;
+}
+
+
+#commentWriter{
+	font-size:17px;
+	font-weight: 700;
+	color : #979797;
+}
+
+#commentUploadTime{
+	font-size:15px;
+	color : #979797;
+	
+}
+table {
+	width: 100%;
+}
+.commentDelete{
+	font-size:11px;
+}
+
+#recommendToContent{
+	font-size:17px;
+}
+
+#like{
+	cursor:pointer;
+}
+#communityContentContent{
+	font-size:25px;
+}
+#commentContent{
+	font-size:22px;
+}
+#section{
+   padding-top:5%;
+   background: #ffecd9;
+    margin-bottom:10%;
+    padding-bottom:5%;
+}
+#commentBtn{
+	font:normal;
+    font-size:16px;
+    padding: 10px 20px;
+    margin-right: 5px;
+	border-color:#e4e4e4;
+    border-radius: 10px;
+    background: #fff;
+}
+#goToList{
+	font:normal;
+    font-size:16px;
+    padding: 10px 20px;
+    margin-right: 5px;
+	border-color:#e4e4e4;
+    border-radius: 10px;
+    background: #fff;
+}
+#communityBoardDelete{
+	font:normal;
+    font-size:16px;
+    padding: 10px 20px;
+    margin-right: 5px;
+	border-color:#e4e4e4;
+    border-radius: 10px;
+    background: #fff;
+}
+#communityBoardModify{
+	font:normal;
+    font-size:16px;
+    padding: 10px 20px;
+    margin-right: 5px;
+	border-color:#e4e4e4;
+    border-radius: 10px;
+    background: #fff;
+}
+input{
+	font-size:25px;
+}
+#writeComment{
+	font-size:21px;
+}
+hr {
+  height: 1px;
+  background-color: #969696;
+}

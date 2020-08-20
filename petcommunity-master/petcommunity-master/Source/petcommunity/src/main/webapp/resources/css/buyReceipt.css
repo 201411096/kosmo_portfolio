@@ -1,0 +1,91 @@
+body {text-align:center; margin:20px auto; font-size: 18px;font-family: 'NanumSquare', sans-serif !important; }
+.back{background : #fbe5cf;padding: 70px 0px;}
+.pimg img{
+	width: 90%;
+}
+#Layout {width:100%; border:1px solid #543f36; margin-top: 5%;}
+#Print {width:500px; text-align:right; padding:3px 5px;}
+.basicDiv {border:1px solid #543f36; padding:7px 0; color:#543f36;}
+
+.tblTop {border-collapse: collapse; border:1px solid #543f36; border-bottom:0px;}
+.tblTop td {padding:5px 0 10px 30px;color:#4b4b4b; }
+.titstxt { color:#543f36;}
+
+.tblTop2 {border-collapse: collapse; border-right:1px solid #543f36; border-left:1px solid #543f36;}
+.tblTop2 .noTd {border-top:1px solid #543f36; border-right:1px solid #543f36; padding:4px;}
+.tblTop2 .noTd .noStxt { color:#666666;}
+.tblTop2 td { color:#543f36; padding:4px; }
+.tblTop2 .name { color:#353535; text-align:right;}
+
+.tbl {border-collapse: collapse; border:1px solid #543f36; }
+.tbl td {border:1px solid #543f36; padding:4px;}
+.tbl td.titTd { color:#543f36;}
+.tbl th { color:#543f36; border:1px solid #543f36; background:#f7feeb; padding:4px;text-align:center;}
+
+.tbl .item { padding-left:15px; width: 22%; font-size: 18px;}
+.tbl .article { text-align:center; font-size: 18px; }
+.tbl .price { color:#4b4b4b; text-align:right; padding-right:7px; font-size: 18px;text-align:center;}
+.tbl .sum {color:#4b4b4b; text-align:right; padding-right:7px; font-size: 18px;text-align:center;}
+
+.tbl .date { color:#4b4b4b; text-align:center;}
+.tbl .total {color:#000000; text-align:right; padding-right:7px; border:2px solid #543f36; background:url(../image/won.gif) no-repeat 5% 40%;}
+
+.stamp {background:url(../image/stamp.gif) no-repeat 98% 20%;}
+
+.txt1 {}
+
+.tedoory{
+ margin-left:25%;
+ margin-top:2%;
+ margin-bottom:5%;
+ width:50%;
+  border: 1px solid #523e32;
+  padding: 25px 30px;
+  -webkit-border-radius: 35px;
+  -moz-border-radius: 35px;
+  border-radius: 35px;
+  }
+
+@media screen and (max-width: 768px){
+
+#Layout {
+	width:97%; border:1px solid #543f36; margin-left: 1%; margin-top: 10%;
+	}
+
+	}
+	
+@media screen and (max-width: 767px){
+	
+.tedoory #buyImg{
+	width: 90%;
+	}
+.pimg img{
+	width: 10%;
+}	
+
+.tedoory{
+ margin:auto;
+ width:90%;
+  border: 1px solid #523e32;
+  padding: 25px 4px;
+  -webkit-border-radius: 35px;
+  -moz-border-radius: 35px;
+  border-radius: 35px;
+   padding-bottom: 60px;
+  }
+	.titTd{
+	display: none;
+	}
+	.pimg{
+	display: none;
+	}
+	.tbl .item{ padding-left:2px;}
+	
+	.tbl td div{
+	width:110px; height:20px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+
+}
+.tbl td:nth-child(2) {
+	
+}
+}

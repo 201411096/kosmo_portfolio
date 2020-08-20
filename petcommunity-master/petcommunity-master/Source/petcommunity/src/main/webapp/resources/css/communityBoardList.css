@@ -1,0 +1,424 @@
+@charset "UTF-8";
+
+@media ( max-width : 1023px ) {
+	
+	.table{
+	border: 1px solid #3333;
+	}
+	thead tr th:nth-child(5) {
+		display: none;
+	}
+	thead tr th:nth-child(3) {
+		display: none;
+	}
+	tbody tr td:nth-child(4) {
+		display: none;
+	}
+	thead tr th:nth-child(2) {
+		width: 100%;
+		word-break: break-all;
+	}
+	tbody tr td:nth-child(2) {
+		width: 100%;
+		word-break: break-all;
+	}
+	thead tr th:nth-child(4) {
+		display: none;
+	}
+	tbody tr td:nth-child(5) {
+		display: none;
+	}
+	thead tr th:nth-child(1) {
+		display: none;
+	}
+	tbody tr td:nth-child(1) {
+		display: none;
+	}
+	thead tr th:nth-child(6) {
+		display: none;
+	}
+	tbody tr td:nth-child(6) {
+		display: none;
+	}
+}
+
+
+
+#backGround{
+	padding-top:5%;
+	background: #ffecd9;
+	margin-bottom: 10%;
+}
+
+#chatLink{
+	width:10%;
+	height:10%;
+	margin-left:250px;
+	font-size: 17px;
+	font-weight: bold;
+}
+ul.pagination li a{
+	background: #ffecd9;
+}
+section div ul.pagination{
+	border : #ffecd9;
+}
+
+.form-control1{
+	width:100%;
+    display: block;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 17px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border-style:none;
+    border: 1px solid #b3b3b3;
+    border-radius: 10px;
+    margin-top:100px;
+  
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+.form-control2{
+	width:100%;
+    display: block;
+    height: 40px;
+    padding: 6px 12px;
+    font-size: 17px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border-style:none;
+    border: 1px solid #b3b3b3;
+    
+    margin-top:5px;
+    
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    border-radius: 10px;
+}
+
+.btnC{
+	font:normal;
+	font-size:16px;
+	padding: 10px 20px;
+	margin-right: 5px;
+border-color:#e4e4e4;
+  border-radius: 10px;
+  background: #fff;
+	
+}
+
+.table-hover td:nth-child(n+3),.table-hover th:nth-child(n+3){
+	text-align: right;
+}
+
+.table-hover td,.table-hover tr{
+	font-size:21px;
+	height: 60px;
+
+}
+.text-dark{
+	font-size:21px;
+}
+.table>tbody>tr>td{
+	
+	padding: 20px 0 ;
+}
+
+.table-hover a{
+	color: #575757;
+	text-decoration:none;
+}
+body{
+	font-family: 'NanumSquare', sans-serif !important;    
+	
+}
+	
+#qnatitle{
+   text-align: center;
+   color: black;
+   font-weight: 700;
+   font-size : 50px;
+   margin-bottom: 1%;
+}	
+
+#qnasubtitle{
+   font-size: 28px;
+   color: gray;
+   text-align: center;
+}
+/* 스크롤 배너 css */
+#banner {
+	width:100%;
+	height:450px;
+	position: absolute;
+	font-size: 10pt;
+	top: 150px;
+	left: 0;
+	z-index: 10;
+	background: #fafafa;
+	padding: 5px;
+	border: 1px solid #e5e5e5;
+	text-align: center;
+}
+#banner a{
+	color: #000;
+	text-decoration:none;
+}
+
+#banner1 a{
+	color: #000;
+	text-decoration:none;
+}
+#banner1 {
+	width:100%;
+	height:220px;
+	position: absolute;
+	font-size: 10pt;
+	top: 620px;
+	left: 290px;
+	z-index: 10;
+	background: #fafafa;
+	padding: 5px;
+	border: 1px solid #e5e5e5;
+	text-align: center;
+}
+
+#bannerX{
+	
+	display : block;
+	margin-top:155px;
+	margin-left:-20px;
+	float:left;
+	font-size: 13px;
+	
+}
+
+.glyphicon-chevron-up{
+	color: #acacac;	
+}
+.glyphicon-chevron-down{
+	color: #acacac;
+}
+
+#bannerX1{
+	position : absolute;
+	margin-top:625px;
+	margin-left:93%;
+	float:left;
+	font-size: 13px;
+	
+}
+
+#display>span {
+	margin-top:10px;
+	margin-bottom: 10px;
+	display: block;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+
+.banner_contents {
+	width:95%;
+	min-height: 200px;
+	margin: auto;
+	margin-bottom: 6px;
+	text-align: left;
+}
+
+.banner_contents .badge-danger{
+	background-color: #a94442;
+}
+
+.tab_menu_container .badgeNew{
+	background-color: #c23129;
+	font-size: 10px;
+	margin-left: 4px;
+}
+.banner_contents span{
+	margin-left:3px;
+	margin-top: 12px;
+	font-size: 17px;
+	
+}
+
+.tab_box span{
+	margin-top: 8px;
+	font-size: 15px;
+	
+}
+
+
+.banner_contents a{
+	margin-left:10px;
+	margin-top: 24px;
+	font-size: 17px;
+	
+}
+
+.tab_box a{
+	margin-left:10px;
+	margin-bottom:10%;
+	font-size: 17px;
+	
+}
+
+.bannerDiv {
+	position: relative;
+	float: right;
+	width: 290px;
+	right: -30%;
+}
+select{
+	font-size:21px;
+}
+.Ranktitle{
+	height:9%;
+	font-size:20px;
+	background: #575757;
+	padding-top: 4px;
+	color: #fff;
+	  -webkit-border-radius:15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+	
+}
+
+.tab_menu_container button {
+  background:none;
+  border:0;
+  outline:0;
+  cursor:pointer;
+}
+.tab_menu_container {
+  display:flex;
+}
+.tab_menu_btn {
+	font-size:17px;
+  width:140px;
+  height:40px;
+  transition:0.3s all;
+}
+.tab_menu_btn.on {
+  border-bottom:1px solid #969696;
+  font-weight:750;
+  font-size:17px;
+  color:#313131;
+}
+.tab_menu_btn:hover {
+  color:#4f4f4f;
+}
+.tab_box {
+  display:none;
+  padding:10px;
+  text-align: left;
+}
+.tab_box.on {
+  display:block;
+}
+/* 스크롤 배너 css */
+#keywordInput {
+	width: 90%
+}
+
+#locationTag {
+	color: #005ab5;
+}
+
+
+@media ( max-width : 767px ) {
+	
+	
+	#backGround{
+	width:100%;
+
+	background: #ffecd9;
+}
+	#chatLink{
+	width:50%;
+	position:relative;
+	margin-left:3%;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.bannerDiv {
+	display: none;
+}
+
+.form-control{
+    display: block;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border-bottom: 1px solid #ccc;
+    border-style:none;
+    border-radius: 4px;
+  
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+.btnC{
+	font:normal;
+	font-size:16px;
+	padding: 3px 7px;
+	margin-right: 5px;
+border-color:#e4e4e4;
+  border-radius: 10px;
+  background: #fff;
+	
+}
+
+.table-hover{
+	width: 95%;
+    max-width: 100%;
+    margin-bottom: 20px;
+	border: none;
+}
+
+.table-hover td:nth-child(n+3),.table-hover th:nth-child(n+3){
+	text-align: right;
+}
+
+.table-hover td{
+	font-size:19px;
+	height: 60px;
+
+}
+
+.table>tbody>tr>td{
+
+	padding: 20px 0 ;
+}
+
+.table-hover a{
+	color: #575757;
+	text-decoration:none;
+}
+
+
+/* 스크롤 배너 css */
+}
+/* #searchBtn{
+	position: relative;
+    left: 10px;
+				
+}
+#writeBtn{			
+	margin-left: 10px;
+} */

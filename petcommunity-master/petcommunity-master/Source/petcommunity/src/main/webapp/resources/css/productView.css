@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+/* 추가 */
+body{
+	font-family: 'NanumSquare', sans-serif !important; 	
+	
+}
+
+#background_section{
+	 padding-top:5%;
+     background: #ffecd9;
+}
+
+#productTable{
+	margin-top: 3%;
+}
+.product-filter-section{
+   padding-top:5%;
+   background: #faf9f8;
+}
+
+.col-lg-4{
+	margin-top:5%;
+	margin-bottom: 5%;
+}
+
+.container #productViewtitle h4{
+   text-align: center;
+   color: black;
+   font-weight: 700;
+	font-size: 50px;
+   margin-bottom: 1%;
+   margin-left: 28%;
+}
+
+.container #productViewsubtitle p{
+   font-size:28px;
+   color: gray;
+   text-align: center;
+   margin-bottom: 5%;
+   margin-left: 28%;
+}
+
+
+
+
+
+@media ( max-width : 767px ) {
+
+.bannerDiv {
+	display: none;
+}
+
+body{
+	font-family: 'NanumSquare', sans-serif !important; 	
+	
+}
+#productViewtitle{
+   text-align: center;
+   color: black;
+   font-weight: 700;
+	font-size: 50px;
+   margin-bottom: 1%;
+   margin-left: 28%;
+}
+
+#productViewsubtitle{
+   font-size:28px;
+   color: gray;
+   text-align: center;
+   margin-bottom: 5%;
+   margin-left: 28%;
+}
+
+}
+

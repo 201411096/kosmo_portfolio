@@ -1,0 +1,8 @@
+1. socketid의 목록 확인하기
+    io.clients(function(error, clients) { // 현재 접속중인 socket의 목록을 다 가져옴
+        if (error) throw error;
+        console.log(clients); // => [6em3d4TJP8Et9EMNAAAA, G5p55dHhGgUnLUctAAAB] // string 배열 형태로 socket의 id를 가져옴
+    });
+2. socket의 목록 확인하기2
+    io.sockets.sockets; // 소켓 리스트_ 소켓 아이디로 소켓의 정보를 가져올 수 있음
+    // 구조 :  소켓_id(key) : 소켓(정보 ex)닉네임...) 등의 key - value 형태

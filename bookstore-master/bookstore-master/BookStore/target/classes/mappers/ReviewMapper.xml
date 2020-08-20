@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReviewDAO">
+	<!-- mybatis 자료형 : int / hashmap / string -->
+	
+<!-- 	게시글 작성하기 -->
+	<insert id="insertReview" parameterType="review">
+		insert into BUYREVIEW (BUYREVIEW_ID, BOOK_ID, CUSTOMER_ID, BUYREVIEW_CONTENT, BUYREVIEW_SCORE) 
+		values (buyReview_id_seq.nextval, #{bookId}, #{customerId}, #{buyreviewContent}, #{buyreviewScore})
+	</insert>
+		
+<!-- 	게시글 출력하기 -->
+	<select id="selectReview" resultType="review" parameterType="review">
+		select BUYREVIEW_ID, CUSTOMER_ID, BOOK_ID, BUYREVIEW_CONTENT, BUYREVIEW_SCORE
+		from BUYREVIEW	
+		where book_id=#{bookId}
+		order by BUYREVIEW_ID
+	</select>
+	<select id="selectReviewByCustomerId" resultType="review" parameterType="review">
+		select BUYREVIEW_ID, CUSTOMER_ID, BOOK_ID, BUYREVIEW_CONTENT, BUYREVIEW_SCORE
+		from BUYREVIEW	
+		where book_id=#{bookId} and customer_id=#{customerId}
+	</select>
+	<select id="selectReviewByReviewId" resultType="review" parameterType="int">
+		select BUYREVIEW_ID, CUSTOMER_ID, BOOK_ID, BUYREVIEW_CONTENT, BUYREVIEW_SCORE
+		from BUYREVIEW
+		where BUYREVIEW_ID=#{buyreviewId}
+	</select>
+	<update id="updateReview" parameterType="review">
+		update BUYREVIEW
+		set BUYREVIEW_CONTENT=#{buyreviewContent}, BUYREVIEW_SCORE=#{buyreviewScore}
+		where book_id=#{bookId} and customer_id=#{customerId} 
+	</update>
+	<delete id="deleteReview" parameterType="review">
+		delete from BUYREVIEW
+		where book_id=#{bookId} and customer_id=#{customerId}
+	</delete>
+	<select id="selectReviewList" resultType="review">
+		select BUYREVIEW_ID, CUSTOMER_ID, BOOK_ID, BUYREVIEW_CONTENT, BUYREVIEW_SCORE
+		from BUYREVIEW
+	</select>
+	<select id="selectReviewListByCustomerId" parameterType="string" resultType="review">
+		select BUYREVIEW_ID, CUSTOMER_ID, BOOK_ID, BUYREVIEW_CONTENT, BUYREVIEW_SCORE
+		from BUYREVIEW
+		where CUSTOMER_ID=#{customerId}
+	</select>
+</mapper>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mainDAO">
+
+	<select id="getLostBoardList" resultType="lostBoard">
+
+		select *
+		from (SELECT LOSTBOARD_ID, LOSTBOARD_TITLE
+		FROM LOSTBOARD
+		ORDER BY LOSTBOARD_READCOUNT DESC)
+		<![CDATA[
+		WHERE ROWNUM<=3
+		]]>
+	</select>
+	
+	<select id="getFindBoardList" parameterType="findBoard" resultType="findBoard">
+	
+		select *
+		from (SELECT FINDBOARD_ID, FINDBOARD_TITLE
+		FROM FINDBOARD
+		ORDER BY FINDBOARD_READCOUNT DESC)
+		<![CDATA[
+		WHERE ROWNUM<=3
+		]]>
+	</select>
+	
+	<select id="getCommunityBoardList" parameterType="community" resultType="community">
+	
+		select *
+		from (SELECT COMMUNITYBOARD_ID, COMMUNITYBOARD_TITLE
+		FROM COMMUNITYBOARD
+		ORDER BY COMMUNITYBOARD_READCOUNT DESC)
+		<![CDATA[
+		WHERE ROWNUM<=3
+		]]>
+	</select>
+	
+	<select id="getQnaBoardList" parameterType="qna" resultType="qna">
+		
+		select *
+		from (SELECT QUESTIONBOARD_ID, QUESTIONBOARD_TITLE
+		FROM QUESTIONBOARD
+		ORDER BY QUESTIONBOARD_READCOUNT DESC)
+		<![CDATA[
+		WHERE ROWNUM<=3
+		]]>
+	</select>
+	
+	<select id="getLostCount" resultType="String">
+	
+	select count(LOSTBOARD_ID) lostCount from lostboard
+	</select>
+	
+	<select id="getfindCount" resultType="String">
+	
+	select count(findboard_id) lostCount from FINDBOARD
+	</select>
+	
+	<select id="getLostDoneCount" parameterType="String" resultType="String">
+	
+	select count(LOSTBOARD_ID) lostCount from lostboard where LOSTBOARD_STATUS = #{data}
+	</select>
+	
+</mapper>

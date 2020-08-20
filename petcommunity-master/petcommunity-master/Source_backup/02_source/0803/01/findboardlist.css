@@ -1,0 +1,39 @@
+input#keywordInput{
+	width: 90%;
+}
+
+table#findboardTable{
+	text-align:center;
+}
+table#findboardTable th{
+	text-align:center;
+}
+
+ul#pagination-demo{
+	text-align: center;
+}
+#search-container{
+	width:100%;
+}
+
+#pagination-demo>li>a, #pagination-demo>li>span {
+   
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #636363;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #fff;
+}
+
+@media screen and (max-width: 1200px) {
+	#container table th:nth-child(1), th:nth-child(5), th:nth-child(6)  { 
+		display: none; 
+	}
+	#container table td:nth-child(1), td:nth-child(5), td:nth-child(6)  { 
+		display: none; 
+	}  
+}

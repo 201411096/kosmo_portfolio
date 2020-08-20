@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CustomerDAO">
+	<!-- mybatis 자료형 : int / hashmap / string -->
+<!-- 	로그인을 확인하는 부분 -->
+	<select id="selectCustomer" resultType="customer" parameterType="customer">
+		select * from CUSTOMER where CUSTOMER_ID = #{customerId} 
+		<if test="customerPassword!=null">
+			and customer_password = #{customerPassword}
+		</if>
+	</select>
+<!-- 	회원가입 부분 -->
+	<insert id="insertCustomer" parameterType="customer">
+		insert into CUSTOMER (customer_id, customer_password, customer_name, customer_tel, customer_point, customer_flag, customer_email) 
+		values(#{customerId},#{customerPassword},#{customerName},#{customerTel}, 0, 1, #{customerEmail})
+	</insert>
+	<select id="getCartList" resultType="bookcart" parameterType="string">
+		select l.buycartlist_id AS buycartlist_id, b.book_id as book_id, b.book_name as book_name, l.buycartlist_cnt as buycartlist_cnt, b.book_price as book_price, b.book_saleprice as book_saleprice, (b.book_saleprice*l.buycartlist_cnt) as book_totalprice
+		from book b 
+		inner join buycartlist l
+		on b.book_id = l.book_id
+		where customer_id=#{customerId}
+	</select>
+	<update id="makeTemporaryPassword" parameterType="customer">
+		update CUSTOMER
+		SET CUSTOMER_PASSWORD = #{customerPassword}
+		WHERE CUSTOMER_EMAIL = #{customerEmail} and
+			  CUSTOMER_ID = #{customerId}
+	</update>
+	
+</mapper>

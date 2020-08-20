@@ -1,0 +1,114 @@
+ body {
+ font-family: 'NanumSquare', sans-serif !important; 
+   height: 100%;
+   -webkit-font-smoothing: antialiased;
+   font-smoothing: antialiased;
+ }
+ 
+ a{
+ font-size: 16px;
+ }
+ .header-warp {
+   padding: 37px 53px;
+ }
+ 
+ .hs-border {
+   border-bottom: 1px solid #e0e0e0;
+ }
+ 
+ .site-logo {
+   display: inline-block;
+ }
+ 
+ .slicknav_menu {
+   display: none;
+ }
+ 
+ .main-menu {
+ font-weight: bold;
+ font-size:17px;
+   float: right;
+     margin-right: 20px;
+     margin-top: 30px;
+ }
+ 
+ 
+ 
+ .header-warp .main-menu a:nth-child(2),.header-warp .main-menu a:nth-child(3),.header-warp .main-menu a:nth-child(4){
+ text-decoration:none;
+ color: #723838;
+ padding: 5px;
+ }
+ 
+ .logout{
+ font-size:17px;
+ font-weight: bold;
+ }
+ 
+ .main-menu li {
+   display: inline-block;
+ }
+ 
+ .main-menu li a {
+   display: block;
+   font-size: 20px;
+   font-weight: 700;
+   padding: 10px 0;
+   color: #081624;
+   margin-left: 30px;
+   text-decoration: none;
+ }
+  .main-menu li a:hover {
+   display: block;
+   font-size: 20px;
+   font-weight: 700;
+   padding: 10px 0;
+   color: gray;
+   margin-left: 37px;
+ }
+
+  df-messenger {
+   --df-messenger-bot-message: #878fac;
+   --df-messenger-button-titlebar-color: #5b4b39;
+   --df-messenger-chat-background-color: #fafafa;
+   --df-messenger-font-color: white;
+   --df-messenger-send-icon: #878fac;
+   --df-messenger-user-message: #ff9f9f;
+  }
+ 
+ 
+  @media only screen and (max-width: 767px) {
+    df-messenger {
+   --df-messenger-bot-message: #878fac;
+   --df-messenger-button-titlebar-color: #5b4b39;
+   --df-messenger-chat-background-color: #fafafa;
+   --df-messenger-font-color: white;
+   --df-messenger-send-icon: #878fac;
+   --df-messenger-user-message: #ff9f9f;
+  }
+  .header-warp {
+     padding: 30px 15px;
+   }
+   .header-section .main-menu {
+     display: none;
+   }
+   .slicknav_menu {
+     display: block;
+     margin-top: -44px;
+     background: transparent;
+   }
+   .slicknav_btn {
+     margin-right: 10px;
+     background: #d7d6ce;
+   }
+   .slicknav_nav {
+     background: #c0bfb1;
+   }
+   .slicknav_nav a:hover,
+   .slicknav_nav .slicknav_row:hover {
+     background: #25394c;
+     color: #fff;
+   }
+ }
+ 
+ /* Small Mobile :320px. */

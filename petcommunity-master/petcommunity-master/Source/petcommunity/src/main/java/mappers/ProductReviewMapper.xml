@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ProductreviewDAO">
+	<select id="reviewCheck" parameterType="hashmap" resultType="productReview">
+		SELECT *
+		FROM PRODUCTREVIEW
+		WHERE PRODUCT_ID=#{productId} AND MEMBER_ID=#{memberId}
+	</select>
+	<insert id="insertReview" parameterType="hashmap">
+		insert into PRODUCTREVIEW(PRODUCTREVIEW_ID, PRODUCTREVIEW_CONTENT, PRODUCTREVIEW_SCORE, MEMBER_ID, PRODUCT_ID, PRODUCTREVIEW_UPLOADTIME) 
+		values(PRODUCTREVIEW_ID_SEQ.nextval, #{productreviewContent}, #{productreviewScore}, #{memberId}, #{productId}, sysdate)
+	</insert>
+	<select id="selectListReview" parameterType="hashmap" resultType="productReview">
+		select *
+		from PRODUCTREVIEW
+		where PRODUCT_ID = #{productId}
+		order by PRODUCTREVIEW_ID desc
+	</select>
+	
+	<delete id="reviewDelete" parameterType="hashmap">
+		DELETE FROM PRODUCTREVIEW
+		WHERE MEMBER_ID = #{writerId} AND PRODUCT_ID = #{productId}
+	</delete>
+	
+	<select id="selectAReview" parameterType="hashmap" resultType="string">
+		select productreview_content
+		from productreivew
+		WHERE MEMBER_ID = #{writerId} AND PRODUCT_ID = #{productId}
+	</select>
+
+	<select id="selectReviewByTagWithPaging" parameterType="hashmap" resultType="productReview">
+		select *
+    	from(
+        	select ROWNUM AS RNUM, PRODUCTREVIEW_ID, PRODUCTREVIEW_CONTENT, PRODUCTREVIEW_SCORE, MEMBER_ID, PRODUCT_ID, PRODUCTREVIEW_UPLOADTIME
+			from(
+				select *
+				from productreview
+				where  PRODUCT_ID = #{productId}
+				order by PRODUCTREVIEW_ID desc
+				)	
+        	)
+        <![CDATA[
+    	where RNUM>=#{startRow} AND RNUM<=#{endRow}
+        ]]>
+	</select>
+	<select id="selectBuy" parameterType="hashmap" resultType="int">
+		select count(buy_id)
+		from BUY
+		where  PRODUCT_ID = #{productId}
+	</select>
+
+</mapper>

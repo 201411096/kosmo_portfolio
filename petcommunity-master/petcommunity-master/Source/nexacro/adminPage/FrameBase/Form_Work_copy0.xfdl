@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="manager" width="1550" height="850" titletext="manager">
+    <Layouts>
+      <Layout width="1550" height="850" screenid="Desktop_screen">
+        <!--   <Static id="Static02_00" taborder="13" text="게시글 수" left="777" top="488" width="59" height="52"/>-->
+        <!-- <Edit id="dnamev00_00" taborder="16" left="870" top="487" width="310" height="47" onchanged="Edit00_onchanged"/>-->
+        <Grid id="Grid03" taborder="7" left="821" top="130" width="699" height="700" border="1px solid black"/>
+        <Grid id="Grid01" taborder="6" left="10" top="40" width="790" height="790" border="1px solid black"/>
+        <Grid id="Grid00" taborder="0" left="30" top="60" width="750" height="740" binddataset="manager" color="transparent" border="1px solid black" cursor="pointer">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="125"/>
+                <Column size="134"/>
+                <Column size="165"/>
+                <Column size="130"/>
+                <Column size="192"/>
+              </Columns>
+              <Rows>
+                <Row size="37" band="head"/>
+                <Row size="42"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="아이디" font="normal 700 24px/normal &quot;나눔스퀘어 Bold&quot;"/>
+                <Cell col="1" text="부서명" font="normal 700 24px/normal &quot;나눔스퀘어 Bold&quot;"/>
+                <Cell col="2" text="입사일" font="normal 700 24px/normal &quot;나눔스퀘어 Bold&quot;"/>
+                <Cell col="3" text="이름" font="normal 700 24px/normal &quot;나눔스퀘어 Bold&quot;"/>
+                <Cell col="4" text="연락처" font="normal 700 24px/normal &quot;나눔스퀘어 Bold&quot;"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:managerId" font="25px/normal &quot;나눔스퀘어 Bold&quot;"/>
+                <Cell col="1" text="bind:managerDept" font="25px/normal &quot;나눔스퀘어 Bold&quot;"/>
+                <Cell col="2" text="bind:managerHireDate" font="25px/normal &quot;나눔스퀘어 Bold&quot;"/>
+                <Cell col="3" text="bind:managerName" font="25px/normal &quot;나눔스퀘어 Bold&quot;"/>
+                <Cell col="4" text="bind:managerTel" font="25px/normal &quot;나눔스퀘어 Bold&quot;"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+        <Static id="Static00" taborder="1" text="아이디" left="867" top="220" width="90" height="40" font="25px/normal &quot;나눔스퀘어 Bold&quot;"/>
+        <Static id="Static02" taborder="2" text="부서명" left="870" top="350" width="90" height="50" font="25px/normal &quot;나눔스퀘어 Bold&quot;"/>
+        <Static id="Static03" taborder="3" text="입사일" left="870" top="490" width="90" height="44" font="25px/normal &quot;나눔스퀘어 Bold&quot;"/>
+        <Button id="managerDelete" taborder="5" text="삭제" left="1360" top="740" width="120" height="50" onclick="deleteBtn_onclick" font="25px/normal &quot;나눔스퀘어 Bold&quot;" border="1px solid black"/>
+        <Edit id="managerId" taborder="4" left="1000" top="216" width="470" height="47" onchanged="Edit00_onchanged" border="1px solid darkgray" font="25px/normal &quot;나눔스퀘어 Bold&quot;"/>
+        <Button id="Button00" taborder="8" text="회원관리" left="10" top="10" width="117" height="30" onclick="Button00_onclick" font="25px/normal &quot;나눔스퀘어 Bold&quot;"/>
+        <Button id="Button00_00" taborder="9" text="직원관리" left="140" top="10" width="117" height="30" onclick="Button00_00_onclick" font="25px/normal &quot;나눔스퀘어 Bold&quot;"/>
+        <Button id="managerSelect" taborder="10" text="조회" left="825" top="40" width="115" height="60" onclick="managerSelectBtn_onclick" font="25px/normal &quot;나눔스퀘어 Bold&quot;" border="1px solid black" visible="true" enableevent="true"/>
+        <Button id="managerInsert" taborder="11" text="등록" left="1190" top="740" width="120" height="50" onclick="managerInsertBtn_onclick" font="25px/normal &quot;나눔스퀘어 Bold&quot;" border="1px solid black"/>
+        <Combo id="managerDept" taborder="12" text="Combo00" left="999" top="353" width="471" height="53" innerdataset="dept" codecolumn="code" datacolumn="data" font="25px/normal &quot;나눔스퀘어 Bold&quot;"/>
+        <Calendar id="managerHireDate" taborder="13" left="1000" top="486" width="472" height="52" font="25px/normal &quot;나눔스퀘어 Bold&quot;"/>
+      </Layout>
+      <Layout name="Layout0" width="1280" height="720" mobileorientation="landscape"/>
+    </Layouts>
+    <Script type="xscript5.1"><![CDATA[
+
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.go("FrameBase::Form_Work.xfdl")
+};
+
+this.Button00_00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	this.go("FrameBase::Form_Work_copy0.xfdl")
+};
+
+
+//매니저 부서 등록하기
+this.managerInsertBtn_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo){
+	alert("수정/등록 되었습니다");
+	var Id = encodeURI(this.managerId.value,"UTF-8");
+	var Dept = this.managerDept.text;
+	var managerHire = encodeURI(this.managerHireDate.value,"UTF-8");
+	
+ 	this.transaction(
+ 			"urlTest03",	
+			"strURL::managerInsert.do?id="+Id+"&dept="+Dept+"&hireDate="+managerHire,
+ 			"",	    
+ 			"manager=ar",  
+ 			"",		
+ 			"fn_callback"
+ 		);
+		
+ 	this.fn_callback = function(svcID, errCD, errMSG){
+ 		let ret = (errMSG=="FAILED" || svcID != "urlTest03") ? "error" : "success";
+ 		if(ret=="error") 
+ 		/*	this.alert("[폼이름_fn_callback] "+ret + " : " + svcID + ", " + errCD + ", " + errMSG);*/
+	};
+	
+};
+
+
+
+// manager 삭제
+this.deleteBtn_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	alert("삭제 되었습니다");
+	var Id = encodeURI(this.managerId.value,"UTF-8");
+	
+ 	this.transaction(
+ 			"urlTest03",	
+			"strURL::managerdelete.do?id="+Id,
+ 			"",	    
+ 			"manager=ar",  
+ 			"",		
+ 			"fn_callback"
+ 		);
+		
+ 	this.fn_callback = function(svcID, errCD, errMSG){
+ 		let ret = (errMSG=="FAILED" || svcID != "urlTest03") ? "error" : "success";
+ 		if(ret=="error") 
+ 			/*this.alert("[폼이름_fn_callback] "+ret + " : " + svcID + ", " + errCD + ", " + errMSG);*/
+	};
+};
+
+// 매니저 조회버튼
+this.managerSelectBtn_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+
+	this.transaction(
+ 			"urlTest03",	
+			"strURL::managerselect.do",
+ 			"",	    
+ 			"manager=ar",  
+ 			"",		
+ 			"fn_callback"
+ 		);
+		
+	this.fn_callback = function(svcID, errCD, errMSG){
+		let ret = (errMSG=="FAILED" || svcID != "urlTest03") ? "error" : "success";
+		if(ret=="error") 
+			/*this.alert("[폼이름_fn_callback] "+ret + " : " + svcID + ", " + errCD + ", " + errMSG);*/
+	}
+	this.managerSelect.set_enable(false);
+	
+};
+]]></Script>
+    <Objects>
+      <Dataset id="Dataset00">
+        <ColumnInfo>
+          <Column id="memberId" type="STRING" size="100"/>
+          <Column id="memberName" type="STRING" size="100"/>
+          <Column id="memberAddress" type="STRING" size="100"/>
+          <Column id="memberTel" type="STRING" size="100"/>
+          <Column id="memberEmail" type="STRING" size="100"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="Dataset01">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="data" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="code">0</Col>
+            <Col id="data">아이디</Col>
+          </Row>
+          <Row>
+            <Col id="code">1</Col>
+            <Col id="data">이름</Col>
+          </Row>
+          <Row>
+            <Col id="code">2</Col>
+            <Col id="data">주소</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="manager">
+        <ColumnInfo>
+          <Column id="managerId" type="STRING" size="256"/>
+          <Column id="managerDept" type="STRING" size="256"/>
+          <Column id="managerHireDate" type="STRING" size="256"/>
+          <Column id="managerName" type="STRING" size="256"/>
+          <Column id="managerTel" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dept">
+        <ColumnInfo>
+          <Column id="code" type="STRING" size="256"/>
+          <Column id="data" type="STRING" size="256"/>
+        </ColumnInfo>
+        <Rows>
+          <Row>
+            <Col id="code">0</Col>
+            <Col id="data">회원관리</Col>
+          </Row>
+          <Row>
+            <Col id="code">1</Col>
+            <Col id="data">커뮤니티</Col>
+          </Row>
+          <Row>
+            <Col id="code">2</Col>
+            <Col id="data">고객문의</Col>
+          </Row>
+          <Row>
+            <Col id="code">3</Col>
+            <Col id="data">반려동물</Col>
+          </Row>
+          <Row>
+            <Col id="code">4</Col>
+            <Col id="data">스토어</Col>
+          </Row>
+        </Rows>
+      </Dataset>
+      <Dataset id="manager00">
+        <ColumnInfo>
+          <Column id="managerId" type="STRING" size="256"/>
+          <Column id="managerDept" type="STRING" size="256"/>
+          <Column id="managerHireDate" type="STRING" size="256"/>
+          <Column id="managerName" type="STRING" size="256"/>
+          <Column id="managerTel" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Bind>
+      <BindItem id="item0" compid="managerId" propid="value" datasetid="manager" columnid="managerId"/>
+      <BindItem id="item2" compid="managerHireDate" propid="value" datasetid="manager" columnid="managerHireDate"/>
+      <BindItem id="item3" compid="managerDept" propid="text" datasetid="manager" columnid="managerDept"/>
+    </Bind>
+  </Form>
+</FDL>

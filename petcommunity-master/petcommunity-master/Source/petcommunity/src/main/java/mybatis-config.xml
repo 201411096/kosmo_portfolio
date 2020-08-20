@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+   <settings>
+      <!-- 언더바(snakeCase)를 낙타표기법(camelCase)으로 변경 -->
+      <setting name="mapUnderscoreToCamelCase" value="true"></setting>
+      <setting name="jdbcTypeForNull" value="NULL" />
+   </settings>
+   
+   <!-- Alias 설정 -->
+   <typeAliases>
+		<typeAlias alias="shop" type="com.mycompany.domain.ShopVO"></typeAlias>
+
+		<typeAlias alias="member" type="com.mycompany.domain.MemberVO"></typeAlias>
+
+		<typeAlias alias="findBoard" type="com.mycompany.domain.FindBoardVO"></typeAlias>
+		
+		<typeAlias alias="lostBoard" type="com.mycompany.domain.LostBoardVO"></typeAlias>
+		
+		<typeAlias alias="findHospital" type="com.mycompany.domain.FindHospitalVO"></typeAlias>
+
+		<typeAlias alias="pagination" type="com.mycompany.domain.PaginationVO"></typeAlias>
+		
+		<typeAlias alias="community" type="com.mycompany.domain.CommunityVO"></typeAlias>
+		
+		<typeAlias alias="comment" type="com.mycompany.domain.CommentVO"></typeAlias>
+		
+		<typeAlias alias="animal" type="com.mycompany.domain.AnimalVO"></typeAlias>
+		
+		<typeAlias alias="qna" type="com.mycompany.domain.QnaVO"></typeAlias>
+
+		<typeAlias alias="product" type="com.mycompany.domain.ProductVO"></typeAlias>
+		
+		<typeAlias alias="productCart" type="com.mycompany.domain.ProductCartVO"></typeAlias>
+		
+		<typeAlias alias="buyList" type="com.mycompany.domain.BuyListVO"></typeAlias>
+
+		<typeAlias alias="productReview" type="com.mycompany.domain.ProductreviewVO"></typeAlias>
+		
+		<typeAlias alias="buylistview" type="com.mycompany.domain.BuylistviewVO"></typeAlias>
+		
+		<typeAlias alias="adminProduct" type="com.mycompany.domain.ProductVO"></typeAlias>
+		
+		<typeAlias alias="message" type="com.mycompany.domain.MessageVO"></typeAlias>
+
+		<typeAlias alias="manager" type="com.mycompany.domain.ManagerVO"></typeAlias>
+		
+
+   </typeAliases>
+   
+   
+</configuration>

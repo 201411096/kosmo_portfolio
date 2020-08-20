@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="buy">
+
+<resultMap type="hashmap" id="buyList">
+		<id column="BUYLIST_ID" property="buyId" />
+		<id column="BUYLIST_DATE" property="buyDate" />
+		<id column="BUYLIST_TOTALPRICE" property="buyTotal" />
+		<id column="product_name" property="buyName" />
+</resultMap>
+
+<select id="mybuyList" parameterType="map" resultMap="buyList">
+select l.BUYLIST_ID BUYLIST_ID, TO_CHAR(l.BUYLIST_DATE,'YYYY-MM-DD')BUYLIST_DATE, l.BUYLIST_TOTALPRICE BUYLIST_TOTALPRICE,LISTAGG(p.product_name, ',') within group (order by p.product_name) product_name
+from buy b join(
+select BUYLIST_ID,BUYLIST_DATE,BUYLIST_TOTALPRICE
+    from (
+        select BUYLIST_ID,BUYLIST_DATE,MEMBER_ID,BUYLIST_TOTALPRICE,ROWNUM as RNUM 
+            from (
+                select BUYLIST_ID,BUYLIST_DATE,MEMBER_ID,BUYLIST_TOTALPRICE
+                    from BUYLIST where member_id=#{memberId} order by BUYLIST_ID desc))
+                    <![CDATA[ 
+	where RNUM>=#{startRow} and RNUM<=#{endRow}
+	]]>
+	)l on l.buylist_id = b.buylist_id join product p on b.product_id=p.product_id group by l.buylist_id , l.buylist_date, l.buylist_totalprice order by l.buylist_id desc
+
+</select>
+
+<resultMap type="hashmap" id="selectList">
+		<id column="BUYLIST_ID" property="buyId" />
+		<id column="member_name" property="memberName" />
+		<id column="member_tel" property="memberTel" />
+		<id column="member_address" property="memberAddress" />
+		<id column="BUYLIST_DATE" property="buyListDate" />
+		<id column="PRODUCT_NAME" property="productName" />
+		<id column="BUY_CNT" property="buyCnt" />
+		<id column="product_price" property="productPrice" />
+		<id column="BUYLIST_TOTALPRICE" property="buyListTotalprice" />
+</resultMap>
+
+<select id="buyReceipt" parameterType="String" resultMap="selectList">
+select a.BUYLIST_ID BUYLIST_ID,m.member_name member_name,m.member_tel member_tel,m.member_address member_address,TO_CHAR(a.BUYLIST_DATE,'YYYY-MM-DD') BUYLIST_DATE,
+b.PRODUCT_NAME PRODUCT_NAME, c.BUY_CNT BUY_CNT, b.product_price product_price,(b.product_price*c.BUY_CNT) BUYLIST_TOTALPRICE
+from BUYLIST a, PRODUCT b,BUY c,member m
+where c.product_id=b.product_id and c.buylist_id=a.buylist_id and a.member_id=m.member_id and a.buylist_id=#{id} 
+</select>
+
+
+<insert id="buyListInsert" parameterType="hashmap">
+insert into BUYLIST values(BUYLIST_ID_SEQ.nextval,sysdate,#{memberId},#{totalPrice})
+
+ <selectKey keyProperty="buyListId" resultType="Integer" order="AFTER">
+    select BUYLIST_ID_SEQ.currval FROM dual 
+  </selectKey>
+</insert>
+
+<insert id="buyInsert" parameterType="hashmap">
+insert into buy values(BUY_ID_SEQ.nextval,${buyListId},${productId},${cnt},${price})
+</insert>
+
+
+<delete id="deleteCart" parameterType="hashmap">
+delete from BUYCARTLIST where MEMBER_ID=#{memberId}
+</delete>
+
+<select id="buyPaging" parameterType="String" resultType="int">
+select count(*) from buylist where member_id = #{memberId}
+</select>
+</mapper>

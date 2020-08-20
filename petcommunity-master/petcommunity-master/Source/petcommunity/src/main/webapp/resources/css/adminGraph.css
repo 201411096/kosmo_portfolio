@@ -1,0 +1,38 @@
+@media screen and (min-width: 1200px) {
+	div.graph_outer_container{
+		margin : 20px;
+		width:46%;
+		float:left;
+		height: 500px;
+	}
+}
+@media screen and (max-width: 1199px) {
+	div.graph_outer_container{
+		margin : 20px;
+		height: 500px;
+	}
+}
+div.graph_outer_container_full{
+	margin : 20px;
+	height: 500px;
+}
+canvas{
+	margin:20px;
+}
+div.graph-container{
+	margin : 50px;
+	height:300px;
+}
+
+div#tab-2 div.alert{
+	font-size: 25px;
+}
+div#tab-2 label{
+	font-size: 15px;
+}
+div#tab-2 select{
+	font-size: 16px;
+}
+div#tab-2 input['datetime-local']{
+	font-size: 20px;
+}

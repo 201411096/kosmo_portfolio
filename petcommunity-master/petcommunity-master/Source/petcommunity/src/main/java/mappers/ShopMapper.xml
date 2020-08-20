@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace='ShopDAO'>
+	
+	<select id='selectShopByTagWithPaging' parameterType="hashmap" resultType="shop">
+			SELECT *
+			FROM(
+				SELECT ROWNUM AS RNUM, SHOP_ID, SHOP_NAME, 
+				SHOP_CATEGORY, SHOP_PRODUCTNAME, SHOP_PRODUCTPRICE, 
+				SHOP_IMG, SHOP_LINK
+				FROM SHOP 
+				<if test="!tagCategory.equals('all')">
+					WHERE SHOP_NAME LIKE '%'||#{tagCategory}||'%' OR SHOP_CATEGORY LIKE '%'||#{tagCategory}||'%' OR SHOP_PRODUCTNAME LIKE '%'||#{tagCategory}||'%'
+					<!-- WHERE REGEXP_LIKE (SHOP_NAME, '(*)'||#{tagCategory}||'(*)') OR REGEXP_LIKE (SHOP_CATEGORY, '(*)'||#{tagCategory}||'(*)') --> 
+				</if>
+				order by SHOP_NAME desc
+				)
+			<![CDATA[
+			WHERE RNUM>=#{startRow} and RNUM<=#{endRow}
+			]]>
+	</select>
+	
+	<select id="selectShopCategoryList" parameterType='hashmap' resultType="shop">
+		select * 
+		from shop
+		<if test="!tagCategory.equals('all')">
+			WHERE SHOP_NAME LIKE '%'||#{tagCategory}||'%' OR SHOP_CATEGORY LIKE '%'||#{tagCategory}||'%' OR SHOP_PRODUCTNAME LIKE '%'||#{tagCategory}||'%'
+			<!-- WHERE REGEXP_LIKE (SHOP_NAME, '(*)'||#{tagCategory}||'(*)') OR REGEXP_LIKE (SHOP_CATEGORY, '(*)'||#{tagCategory}||'(*)') -->  
+		</if>
+		order by shop_name desc
+	</select>
+	
+	<select id="selectSearchAutoProduct" parameterType="string" resultType="string">
+		SELECT SHOP_PRODUCTNAME
+		FROM SHOP
+		WHERE SHOP_PRODUCTNAME LIKE '%'||#{searchSomething}||'%'
+	</select>
+	
+	<select id="selectSearchAutoShop" parameterType="string" resultType="string">
+		SELECT SHOP_NAME
+		FROM SHOP
+		WHERE SHOP_NAME LIKE '%'||#{searchSomething}||'%'
+	</select>
+	
+	<select id="selectSearchAutoCategory" parameterType="string" resultType="string">
+		SELECT SHOP_PRODUCTNAME
+		FROM SHOP
+		WHERE SHOP_CATEGORY LIKE '%'||#{searchSomething}||'%'
+	</select>
+	
+	<resultMap type="hashmap" id="buyList">
+		<id column="BUY_CNT" property="buyCnt" />
+		<id column="PRODUCT_name" property="pname" />
+		<id column="product_id" property="pId" />
+</resultMap>
+	
+	<select id="shoprank" resultMap="buyList">
+	select sum(b.BUY_CNT)BUY_CNT ,p.PRODUCT_name PRODUCT_name,p.product_id product_id
+	from buy b, product p 
+	where b.product_id=p.product_id
+	group by p.PRODUCT_name,p.product_id order by BUY_CNT desc
+	</select>
+</mapper>

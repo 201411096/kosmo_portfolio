@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+#section{
+   padding-top:5%;
+   background: #ffecd9;
+    margin-bottom:10%;
+    padding-bottom:5%;
+}
+
+#commitWrite{
+	font:normal;
+    font-size:16px;
+    padding: 10px 20px;
+    margin-right: 5px;
+	border-color:#e4e4e4;
+    border-radius: 10px;
+    background: #fff;
+}
+#cancelWrite{
+	font:normal;
+    font-size:16px;
+    padding: 10px 20px;
+    margin-right: 5px;
+	border-color:#e4e4e4;
+    border-radius: 10px;
+    background: #fff;
+}
+input[type="text"] {
+    font-size:18px;
+}
+input[type="file"] {
+    font-size:18px;
+}
+#section > div > form > div:nth-child(5) > textarea{
+	resize:none;
+	font-size: 22px;
+	overflow: scroll;
+}
+#section > div > form > div:nth-child(6) > textarea{
+	resize:none;
+	font-size: 22px;
+	overflow: scroll;
+}
+#section div form div select{
+	font-size:18px;	
+}
+label{
+	font-size:19px;	
+}
+	
+}

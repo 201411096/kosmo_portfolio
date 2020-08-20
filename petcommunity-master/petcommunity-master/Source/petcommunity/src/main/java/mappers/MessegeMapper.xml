@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="messageDAO">
+<select id="getMessagePartner" parameterType="hashmap" resultType="message">
+
+    	SELECT ROWNUM AS RNUM, MESSAGE_ID, MESSAGE_CONTENTS, MESSAGE_TARGET1, MESSAGE_TARGET2, MESSAGE_SENDER, MESSAGE_SENDTIME, MESSAGE_READFLAG
+    	FROM(
+        	SELECT *
+        	FROM MESSAGE
+        	WHERE MESSAGE_TARGET1 = #{id} OR MESSAGE_TARGET2 = #{id}
+        	ORDER BY MESSAGE_SENDTIME DESC
+        )
+
+</select>
+<select id="getMessagePartner2" parameterType="hashmap" resultType="message">
+<!-- 	SELECT * -->
+<!-- 	FROM( -->
+<!--     	SELECT ROWNUM AS RNUM, MESSAGE_ID, MESSAGE_CONTENTS, MESSAGE_TARGET1, MESSAGE_TARGET2, MESSAGE_SENDER, MESSAGE_SENDTIME, MESSAGE_READFLAG -->
+<!--     	FROM( -->
+        	SELECT *
+        	FROM MESSAGE
+        	<choose>
+        	<when  test="otherId==id">
+        	WHERE MESSAGE_TARGET1 = #{id} OR MESSAGE_TARGET2 = #{id}
+        	ORDER BY MESSAGE_SENDTIME DESC
+        	</when >
+        	<otherwise>
+        	WHERE (MESSAGE_TARGET1 = #{id} AND MESSAGE_TARGET2 = #{otherId}) OR (MESSAGE_TARGET1 = #{otherId} AND MESSAGE_TARGET2 = #{id})
+        	ORDER BY MESSAGE_SENDTIME
+        	</otherwise>
+        	</choose>
+<!--         ) -->
+<!--     ) -->
+<!-- 	<![CDATA[ -->
+<!-- 	WHERE RNUM>#{startPage} AND RNUM <=#{endPage} -->
+<!-- 	]]> -->
+</select>
+
+<insert id="insertMessage" parameterType="hashmap">
+	INSERT INTO MESSAGE(MESSAGE_ID, MESSAGE_CONTENTS, MESSAGE_TARGET1, MESSAGE_TARGET2, MESSAGE_SENDER, MESSAGE_SENDTIME, MESSAGE_READFLAG) values(MESSAGE_ID.nextval, #{content}, #{id}, #{otherId}, #{id}, sysdate, 1)
+</insert>
+
+<delete id="delMessage" parameterType="string">
+	delete from MESSAGE where MESSAGE_ID=#{msgId}
+</delete>
+
+<select id="addMessage" parameterType="hashmap" resultType="message">
+	SELECT ROWNUM, MESSAGE_CONTENTS, MESSAGE_TARGET1, MESSAGE_TARGET2, MESSAGE_SENDER, MESSAGE_SENDTIME, MESSAGE_ID, MESSAGE_READFLAG
+    FROM ( 
+            SELECT *
+            FROM MESSAGE
+            WHERE MESSAGE_CONTENTS=#{content} AND MESSAGE_SENDER = #{id}
+            ORDER BY MESSAGE_ID DESC
+        )
+    WHERE ROWNUM=1
+</select>
+</mapper>

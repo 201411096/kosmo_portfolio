@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="lostBoardDAO">
+	<!-- mybatis 자료형 : int / hashmap / string -->
+	<select id="getLostBoardList" resultType="lostBoard" parameterType="hashmap">
+		select * from lostboard
+		<if test = "searchType == 'title'">
+			where REGEXP_LIKE (lostboard_title, '(*)'||#{searchWord}||'(*)')	
+		</if>
+		<if test = "searchType == 'writer'">
+			where REGEXP_LIKE (lostboard_name, '(*)'||#{searchWord}||'(*)')	
+		</if>
+		<if test = "searchType == 'content'">
+			where REGEXP_LIKE (lostboard_content, '(*)'||#{searchWord}||'(*)')	
+		</if>
+		<if test = "searchType == 'titleandcontent'">
+			where REGEXP_LIKE (lostboard_content, '(*)'||#{searchWord}||'(*)')
+			or REGEXP_LIKE (lostboard_title, '(*)'||#{searchWord}||'(*)')
+		</if>
+		<if test = "searchType == 'location'">
+					where REGEXP_LIKE (lostboard_location, '(*)'||#{searchWord}||'(*)')
+		</if>
+	</select>
+	<select id="getLostBoardListWithPaging" parameterType="hashmap" resultType="lostBoard">	
+	    select *
+	    from (
+	    	select lostboard_id, lostboard_title, lostboard_content, lostboard_location, lostboard_x, lostboard_y, lostboard_status, lostboard_uploadtime, lostboard_readcount, member_id, animal_id, ROWNUM AS RNUM
+	    	from
+				(SELECT lostboard_id, lostboard_title, lostboard_content, lostboard_location, lostboard_x, lostboard_y, lostboard_status, lostboard_uploadtime, lostboard_readcount, member_id, animal_id
+				FROM lostboard
+				<if test = "searchType == 'title'">
+					where REGEXP_LIKE (lostboard_title, '(*)'||#{searchWord}||'(*)')	
+				</if>
+				<if test = "searchType == 'writer'">
+					where REGEXP_LIKE (lostboard_name, '(*)'||#{searchWord}||'(*)')	
+				</if>
+				<if test = "searchType == 'content'">
+					where REGEXP_LIKE (lostboard_content, '(*)'||#{searchWord}||'(*)')	
+				</if>
+				<if test = "searchType == 'titleandcontent'">
+					where REGEXP_LIKE (lostboard_content, '(*)'||#{searchWord}||'(*)')
+					or REGEXP_LIKE (lostboard_title, '(*)'||#{searchWord}||'(*)')
+				</if>
+				<if test = "searchType == 'location'">
+					where REGEXP_LIKE (lostboard_location, '(*)'||#{searchWord}||'(*)')
+				</if>
+				ORDER BY lostboard_id DESC
+				)
+		)
+	<![CDATA[ 
+		where RNUM>=#{startRow} and RNUM<=#{endRow}
+	]]>
+	
+	</select>
+	<insert id="insertLostBoard" parameterType="lostBoard">
+		INSERT INTO lostboard
+		(
+			LOSTBOARD_ID, LOSTBOARD_TITLE, LOSTBOARD_CONTENT, LOSTBOARD_LOCATION, LOSTBOARD_X, LOSTBOARD_Y, LOSTBOARD_STATUS, LOSTBOARD_UPLOADTIME, LOSTBOARD_READCOUNT, MEMBER_ID, ANIMAL_ID 
+		)
+		VALUES(
+			lostboard_id_seq.nextval, #{lostboardTitle}, #{lostboardContent}, #{lostboardLocation}, #{lostboardX}, #{lostboardY}, #{lostboardStatus}, SYSDATE, #{lostboardReadcount}, #{memberId}, #{animalId}
+		)
+		<selectKey keyProperty="lostboardId" resultType="Integer" order="AFTER">
+			SELECT lostboard_id_seq.currval FROM dual 
+		 </selectKey>
+	</insert>
+	
+	<update id="updateLostBoard" parameterType="lostBoard">
+		update lostboard set 
+		LOSTBOARD_TITLE = #{lostboardTitle},
+		LOSTBOARD_CONTENT = #{lostboardContent},
+		LOSTBOARD_LOCATION = #{lostboardLocation},
+		LOSTBOARD_X = #{lostboardX},
+		LOSTBOARD_Y = #{lostboardY},
+		LOSTBOARD_STATUS = #{lostboardStatus},
+		ANIMAL_ID = #{animalId}
+		<if test="lostboardStatus == '찾음'">
+		,LOSTBOARD_FINDTIME = SYSDATE
+		</if>
+		where LOSTBOARD_ID = #{lostboardId}
+	</update>
+	
+	<update id="increaseLostBoardReadcount" parameterType="lostBoard">
+		UPDATE lostboard set LOSTBOARD_READCOUNT = LOSTBOARD_READCOUNT + 1
+		where LOSTBOARD_ID = ${lostboardId}
+	</update>
+	
+	<delete id="deleteLostBoard" parameterType="lostBoard">
+		delete from lostboard
+		where LOSTBOARD_ID = ${lostboardId}
+	</delete>
+	
+	<select id="getLostBoard" parameterType="lostBoard" resultType="lostBoard">
+		SELECT * FROM lostboard
+		where LOSTBOARD_ID = #{lostboardId}
+	</select>
+
+	<select id="getStringForAutoComplete" resultType="string" parameterType="hashmap">
+	select distinct
+	<if test = "searchType == 'title'">
+		lostboard_title from lostboard
+		where REGEXP_LIKE (lostboard_title, '(*)'||#{searchWord}||'(*)')	
+	</if>
+	<if test = "searchType == 'writer'">
+		lostboard_name from lostboard
+		where REGEXP_LIKE (lostboard_name, '(*)'||#{searchWord}||'(*)')	
+	</if>
+	<if test = "searchType == 'location'">
+		lostboard_location from lostboard
+		where REGEXP_LIKE (lostboard_location, '(*)'||#{searchWord}||'(*)')
+	</if>
+	</select>
+	<select id="getLostBoardForMap" parameterType="hashmap" resultType="lostBoard">
+		select * from lostboard
+		where lostboard_status = '찾는 중'
+		<if test = "locationForSearch != ''">
+		and REGEXP_LIKE (lostboard_location, '(*)'||#{locationForSearch}||'(*)')
+		</if>
+		<if test="timeForSearch != ''">
+		and lostboard_uploadtime > sysdate - #{timeForSearch}
+		</if> 
+	</select>
+	<select id="getLostBoardForMap2" parameterType="hashmap" resultType="lostBoard">
+		select * from lostboard
+		where lostboard_status = '찾음'
+		<if test = "locationForSearch != ''">
+		and REGEXP_LIKE (lostboard_location, '(*)'||#{locationForSearch}||'(*)')
+		</if>
+		<if test="timeForSearch != ''">
+		and lostboard_uploadtime > sysdate - #{timeForSearch}
+		</if> 
+	</select>
+	
+	<!-- 알림 보낼 list 찾아내는 함수 -->
+	<select id="findPeopleByLocationOfLostPost" parameterType="findBoard" resultType="lostBoard">
+		SELECT *
+  		FROM LOSTBOARD
+		WHERE (LOSTBOARD_X BETWEEN #{findboardX}-0.019 AND #{findboardX}+0.019)
+    		AND (LOSTBOARD_Y BETWEEN #{findboardY}-0.022 AND #{findboardY}+0.022)
+	</select>
+</mapper>

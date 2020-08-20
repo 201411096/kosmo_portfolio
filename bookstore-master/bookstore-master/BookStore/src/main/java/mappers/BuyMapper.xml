@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BuyDAO">
+   <!-- mybatis 자료형 : int / hashmap / string -->
+   <insert id="addBuy" parameterType="buy">
+	INSERT INTO BUY(BUY_ID, BUYLIST_ID, BOOK_ID, BUY_CNT) 
+		VALUES(BUY_ID_SEQ.NEXTVAL, #{buylistId}, #{bookId}, #{buyCnt})
+   </insert>
+	<select id="selectAllBuyByBuyListId" parameterType="int" resultType="map">
+		select bu.BUY_ID AS buyId, bu.BUYLIST_ID AS buylistId, bu.BOOK_ID AS bookId, bu.BUY_CNT AS buyCnt, bo.BOOK_SALEPRICE AS bookSaleprice, bo.BOOK_NAME AS bookName, bo.BOOK_GENRE AS bookGenre
+		from buy bu
+		inner join book bo
+		on bu.BOOK_ID=BO.BOOK_ID
+		where BUYLIST_ID=#{buylistId}
+		order by bu.BUY_ID
+	</select>
+</mapper>

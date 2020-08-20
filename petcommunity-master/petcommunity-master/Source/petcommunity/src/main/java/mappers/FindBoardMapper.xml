@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="findBoardDAO">
+	<!-- mybatis 자료형 : int / hashmap / string -->
+	<select id="getFindBoardList" resultType="findBoard" parameterType="hashmap">
+		select * from findboard
+		<if test = "searchType == 'title'">
+			where REGEXP_LIKE (findboard_title, '(*)'||#{searchWord}||'(*)')	
+		</if>
+		<if test = "searchType == 'writer'">
+			where REGEXP_LIKE (findboard_name, '(*)'||#{searchWord}||'(*)')	
+		</if>
+		<if test = "searchType == 'content'">
+			where REGEXP_LIKE (findboard_content, '(*)'||#{searchWord}||'(*)')	
+		</if>
+		<if test = "searchType == 'titleandcontent'">
+			where REGEXP_LIKE (findboard_content, '(*)'||#{searchWord}||'(*)')
+			or REGEXP_LIKE (findboard_title, '(*)'||#{searchWord}||'(*)')
+		</if>
+		<if test = "searchType == 'location'">
+					where REGEXP_LIKE (findboard_location, '(*)'||#{searchWord}||'(*)')
+		</if>
+	</select>
+	<select id="getFindBoardListWithPaging" parameterType="hashmap" resultType="findBoard">	
+	    select *
+	    from (
+	    	select findboard_id, findboard_title, findboard_content, findboard_location, findboard_x, findboard_y, findboard_status, findboard_uploadtime, findboard_tel, findboard_name, findboard_readcount, member_id, animal_type, ROWNUM AS RNUM
+	    	from
+				(SELECT findboard_id, findboard_title, findboard_content, findboard_location, findboard_x, findboard_y, findboard_status, findboard_uploadtime, findboard_tel, findboard_name, findboard_readcount, member_id, animal_type
+				FROM findboard
+				<if test = "searchType == 'title'">
+					where REGEXP_LIKE (findboard_title, '(*)'||#{searchWord}||'(*)')	
+				</if>
+				<if test = "searchType == 'writer'">
+					where REGEXP_LIKE (findboard_name, '(*)'||#{searchWord}||'(*)')	
+				</if>
+				<if test = "searchType == 'content'">
+					where REGEXP_LIKE (findboard_content, '(*)'||#{searchWord}||'(*)')	
+				</if>
+				<if test = "searchType == 'titleandcontent'">
+					where REGEXP_LIKE (findboard_content, '(*)'||#{searchWord}||'(*)')
+					or REGEXP_LIKE (findboard_title, '(*)'||#{searchWord}||'(*)')
+				</if>
+				<if test = "searchType == 'location'">
+					where REGEXP_LIKE (findboard_location, '(*)'||#{searchWord}||'(*)')
+				</if>
+				ORDER BY findboard_id DESC
+				)
+		)
+	<![CDATA[ 
+		where RNUM>=#{startRow} and RNUM<=#{endRow}
+	]]>
+	
+	</select>
+	<insert id="insertFindBoard" parameterType="findBoard">
+		INSERT INTO findboard
+		(
+			FINDBOARD_ID, FINDBOARD_TITLE, FINDBOARD_CONTENT, FINDBOARD_LOCATION, FINDBOARD_X, FINDBOARD_Y, FINDBOARD_STATUS, FINDBOARD_UPLOADTIME, FINDBOARD_TEL, FINDBOARD_NAME, FINDBOARD_READCOUNT, MEMBER_ID, ANIMAL_TYPE 
+		)
+		VALUES(
+			findboard_id_seq.nextval, #{findboardTitle}, #{findboardContent}, #{findboardLocation}, #{findboardX}, #{findboardY}, #{findboardStatus}, SYSDATE, #{findboardTel}, #{findboardName}, #{findboardReadcount}, #{memberId}, #{animalType}
+		)
+		<selectKey keyProperty="findboardId" resultType="Integer" order="AFTER">
+			SELECT findboard_id_seq.currval FROM dual 
+		 </selectKey>
+	</insert>
+	
+	<update id="updateFindBoard" parameterType="findBoard">
+		update findboard set 
+		FINDBOARD_TITLE = #{findboardTitle},
+		FINDBOARD_CONTENT = #{findboardContent},
+		FINDBOARD_LOCATION = #{findboardLocation},
+		FINDBOARD_X = #{findboardX},
+		FINDBOARD_Y = #{findboardY},
+		FINDBOARD_STATUS = #{findboardStatus},
+		FINDBOARD_TEL = #{findboardTel},
+		FINDBOARD_NAME = #{findboardName},
+		ANIMAL_TYPE = #{animalType}
+		where FINDBOARD_ID = #{findboardId}
+	</update>
+	
+	<update id="increaseFindBoardReadcount" parameterType="findBoard">
+		UPDATE findboard set FINDBOARD_READCOUNT = FINDBOARD_READCOUNT + 1
+		where FINDBOARD_ID = ${findboardId}
+	</update>
+	
+	<delete id="deleteFindBoard" parameterType="findBoard">
+		delete from findboard
+		where FINDBOARD_ID = ${findboardId}
+	</delete>
+	
+	<select id="getFindBoard" parameterType="findBoard" resultType="findBoard">
+		SELECT * FROM findboard
+		where FINDBOARD_ID = #{findboardId}
+	</select>
+
+	<select id="getStringForAutoComplete" resultType="string" parameterType="hashmap">
+	select distinct
+	<if test = "searchType == 'title'">
+		findboard_title from findboard
+		where REGEXP_LIKE (findboard_title, '(*)'||#{searchWord}||'(*)')	
+	</if>
+	<if test = "searchType == 'writer'">
+		findboard_name from findboard
+		where REGEXP_LIKE (findboard_name, '(*)'||#{searchWord}||'(*)')	
+	</if>
+	<if test = "searchType == 'location'">
+		findboard_location from findboard
+		where REGEXP_LIKE (findboard_location, '(*)'||#{searchWord}||'(*)')
+	</if>
+	</select>
+	<select id="getFindBoardForMap" parameterType="hashmap" resultType="findBoard">
+		select * from findboard
+		where findboard_id is not null
+		<if test="timeForSearch != ''">
+		and findboard_uploadtime > sysdate - #{timeForSearch}
+		</if>
+		<if test = "locationForSearch != ''">
+		and REGEXP_LIKE (findboard_location, '(*)'||#{locationForSearch}||'(*)')
+		</if>
+		 
+	</select>
+	
+</mapper>

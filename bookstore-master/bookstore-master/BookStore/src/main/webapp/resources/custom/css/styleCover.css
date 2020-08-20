@@ -1,0 +1,111 @@
+@charset "utf-8";
+
+#right-btn1 {
+	color: #f1e0b2;
+	border: 1.5px solid #f1e0b2;
+	background-color:#3b3e5f;
+	font-size: 18px;
+	font-weight: 700
+	
+	text-transform: uppercase;
+	padding: 13px 45px 11px;
+	cursor: pointer;
+	
+	position: relative;
+	left: 80%;
+	top: 10px;
+	margin-top: -10%;
+}
+
+#right-btn2 {
+	color: #f1e0b2;
+	border: 1.5px solid #f1e0b2;
+	background-color:#3b3e5f;
+	font-size: 18px;
+	font-weight: 700
+	
+	text-transform: uppercase;
+	padding: 13px 45px 11px;
+	cursor: pointer;
+	
+	position: relative;
+	left: 80%;
+	top: 10px;
+	margin-top: -10%;
+}
+
+#right-btn3 {
+	color: #f1e0b2;
+	border: 1.5px solid #f1e0b2;
+	background-color:#3b3e5f;
+	font-size: 18px;
+	font-weight: 700
+	
+	text-transform: uppercase;
+	padding: 13px 45px 11px;
+	cursor: pointer;
+	
+	position: relative;
+	left: 80%;
+	top: 10px;
+	margin-top: -10%;
+}
+
+body{ 
+background: #3b3e5f;
+background-percentage:100%;
+width:95%;
+}
+
+#coverLogo {
+	position: relative;
+	margin-left: 200px;
+	margin-top: 400px;
+	max-width: 100%;
+	height:auto;
+}
+
+#subImg{
+	margin-left: 800px;
+	margin-top: 500px;
+}
+
+
+/*---------------------
+  Partner Logo
+-----------------------*/
+
+.partner-best {
+	background: #3b3e5f;
+	padding: 38px 0;
+}
+
+.best-carousel .best-item {
+	display: table;
+}
+
+.best-carousel .best-item .cell-inner {
+	display: table-cell;
+	height: 45px;
+	vertical-align: middle;
+}
+.book-banner{
+	margin-top:-10%;
+}
+.book-carousel .best-item img {
+	display: block;
+	width: auto;
+}
+#best li{
+	display: inline-block;
+    padding: 10px;
+    margin-bottom: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    color:#f1e0b2;
+}
+#best .filter-control .active{
+	border-bottom : 2px solid #f1e0b2;
+}
+
+

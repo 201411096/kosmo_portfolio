@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <GenInfo version="1.1">
+    <Rule>
+      <ENV rule_version="1.05"/>
+      <ADL rule_version="1.14"/>
+      <FDL rule_version="1.04"/>
+      <XCSS rule_version="1.04"/>
+      <Script rule_version="1.02"/>
+    </Rule>
+    <Info project="C:\Users\Canon\Documents\GitHub\petcommunity\Source\nexacro\adminPage\" generated="C:\Users\Canon\Documents\GitHub\petcommunity\Source\petcommunity\src\main\webapp\"><File url="typedefinition.xml" checksum="20200805175305" errormsg=""/><File url="appvariables.xml" checksum="20200805175305" errormsg=""/><File url="environment.xml" checksum="20200805175305" errormsg=""/><File url="FrameBase\manager.xfdl" checksum="20200804181751" errormsg=""/><File url="_resource_\_theme_\default\theme.xcss" checksum="20200805175305" errormsg=""/><File url="Application_Desktop.xadl" checksum="20200805175305" errormsg=""/><File url="_resource_\_xcss_\adminPage.xcss" checksum="20200805175305" errormsg=""/><File url="FrameBase\Form_Work.xfdl" checksum="20200817122744" errormsg=""/><File url="C:\Program Files (x86)\nexacro\17.1\nexacro17lib\framework\Framework.json" checksum="20200128141820" errormsg=""/><File url="C:\Program Files (x86)\nexacro\17.1\nexacro17lib\resources\Resource.json" checksum="20200128141820" errormsg=""/><File url="C:\Program Files (x86)\nexacro\17.1\nexacro17lib\component\CompBase.json" checksum="20200128141818" errormsg=""/><File url="C:\Program Files (x86)\nexacro\17.1\nexacro17lib\component\ComComp.json" checksum="20200128141818" errormsg=""/><File url="C:\Program Files (x86)\nexacro\17.1\nexacro17lib\component\Grid.json" checksum="20200128141818" errormsg=""/><File url="C:\Program Files (x86)\nexacro\17.1\nexacro17lib\component\ListView.json" checksum="20200128141820" errormsg=""/><File url="C:\Program Files (x86)\nexacro\17.1\nexacro17lib\component\DeviceAPI.json" checksum="20200128141818" errormsg=""/><File url="Base\Form_Work.xfdl" checksum="20200804180657" errormsg=""/><File url="Base\manager.xfdl" checksum="20200804170803" errormsg=""/><File url="FrameBase\indexPage.xfdl" checksum="20200804174359" errormsg=""/><File url="FrameBase\member.xfdl" checksum="20200804182447" errormsg=""/><File url="FrameBase\manager.xfdl" checksum="20200804182136" errormsg=""/><File url="FrameBase\manager.xfdl" checksum="20200804181751" errormsg=""/><File url="FrameBase\Form_Work_copy0.xfdl" checksum="20200817102709" errormsg=""/></Info>
+  </GenInfo>
+</root>

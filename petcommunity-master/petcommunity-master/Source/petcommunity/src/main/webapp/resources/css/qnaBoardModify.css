@@ -1,0 +1,65 @@
+@charset "UTF-8";
+body{
+	font-family: 'NanumSquare', sans-serif !important; 	
+}
+#container{
+	 padding-top:5%;
+   background: #ffecd9;
+}
+.container{
+	min-height:100%;
+   position:relative;
+   padding-bottom:100px;	
+	
+}
+
+#qnaTitle h4{
+	text-align: center;
+	color: black;
+	margin-bottom: 1%;
+	font-weight: 700;
+	font-size : 50px;
+}
+
+#qnasubtitle{
+	font-size: 28px;
+	color: gray;
+	text-align: center;
+}
+
+.form-group label{
+	font-size: 17px;
+}
+
+.form-group p{
+	font-size: 17px;
+}
+
+#questionboardTitle{
+	font-size: 17px;
+}
+
+#questionboardContent{
+	font-size: 17px;
+}
+
+#commitWrite{
+	font:normal;
+font-size:16px;
+padding: 10px 20px;
+margin-right: 5px;
+border-color:#e4e4e4;
+border-radius: 10px;
+background: #fff;
+}
+
+#cancelWrite{
+	font:normal;
+font-size:16px;
+padding: 10px 20px;
+margin-right: 5px;
+border-color:#e4e4e4;
+border-radius: 10px;
+background: #fff;
+}
+

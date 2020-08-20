@@ -1,0 +1,14 @@
+1. findboardlist.js, lostboardlist.js - socket 주소
+2. app.js - socket 주소
+3. root-context.xml - db주소
+4. mypage-messageVer2.js - socket 주소
+5. header에 socket을 넣을 경우 -> findboardlist.js, lostboardlist.js 에서 빼야됨 ( 소켓 여는 부분을)
+--------
+view를 작성해둔게 없어짐
+SELECT BUYLIST_DATE, PRODUCT_NAME, BUY_CNT, BUY_TOTALPRICE,   PRODUCT_ID   FROM BUYLISTVIEW   ORDER BY BUYLIST_DATE desc
+--------
+200815_21:00
+module_socket.js > socket주소
+app.js > socket 주소
+root-context.xml - db주소
+

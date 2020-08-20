@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AdminProductDAO">
+
+<!-- mybatis 자료형 : int / hashmap / string -->
+
+<!-- 상품등록 -->
+<insert parameterType="product" id="insertProduct">
+INSERT INTO PRODUCT(PRODUCT_ID, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_CNT, PRODUCT_FEATURE, PRODUCT_CONTENT)
+VALUES(PRODUCT_ID_seq.nextval,#{productName},#{productPrice},#{productCnt},#{productFeature},#{productContent}) 
+</insert>
+
+
+<!-- 상품리스트 -->
+<select parameterType="product" id="selectProduct" resultType="product">
+SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_CNT, PRODUCT_FEATURE, PRODUCT_CONTENT
+from product
+order by PRODUCT_ID asc 
+</select>
+
+<!-- 상품리스트 -->
+<select parameterType="product" id="selectProductDetail" resultType="product">
+SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_CNT, PRODUCT_FEATURE, PRODUCT_CONTENT
+from product
+where product_id=#{productId}
+</select>
+
+<!-- 상품 수 출력 : 상품명으로 검색 + 페이징 -->
+	<select id="selectProductCntByNameWithPaging"
+		parameterType="string" resultType="int">
+		<![CDATA[
+		SELECT count(*)
+		FROM (SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_CNT, PRODUCT_FEATURE, PRODUCT_CONTENT
+		FROM product
+		WHERE REGEXP_LIKE (PRODUCT_NAME, '(*)'||#{searchWord}||'(*)')
+		ORDER BY PRODUCT_ID ASC
+		)
+		]]>
+	</select>
+	
+<!-- 상품출력 : 상품명 + 상품명으로 검색 + 페이징 -->
+	<select id="selectProductSearchByNameWithPaging"
+		parameterType="hashmap" resultType="product">
+	<![CDATA[
+	SELECT *
+	FROM (SELECT PRODUCT_ID, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_CNT, PRODUCT_FEATURE, PRODUCT_CONTENT, ROWNUM AS RNUM
+		FROM PRODUCT
+		WHERE REGEXP_LIKE (PRODUCT_NAME, '(*)'||#{searchWord}||'(*)')
+			ORDER BY PRODUCT_ID ASC
+		)
+	WHERE RNUM>=#{startRow} and RNUM<=#{endRow}
+	]]>
+	</select>	
+
+<!-- 상품수정 -->
+<update parameterType="product" id="updateProduct">
+UPDATE product SET PRODUCT_ID=#{productId}, PRODUCT_NAME=#{productName}, PRODUCT_PRICE=#{productPrice}, 
+PRODUCT_CNT=#{productCnt}, PRODUCT_FEATURE=#{productFeature},PRODUCT_CONTENT=#{productContent}
+WHERE(PRODUCT_ID=#{productId}) 
+</update>
+
+<!-- 상품삭제 -->
+<update parameterType="product" id="deleteProduct">
+update product set PRODUCT_CNT = -1 WHERE PRODUCT_ID=#{productId} 
+</update>
+
+
+
+</mapper>
+

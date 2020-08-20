@@ -1,0 +1,1 @@
+on(chat message, 구조 변경전)

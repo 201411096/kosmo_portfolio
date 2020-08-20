@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BookDAO">
+   <!-- mybatis 자료형 : int / hashmap / string -->
+   <select id="selectBook" resultType="book" parameterType="book">
+<!--       select * from BOOK where BOOK_ID = #{bookId} -->
+      SELECT b.BOOK_ID AS BOOK_ID, b.WRITER_ID AS WRITER_ID, b.BOOK_PRICE AS BOOK_PRICE, 
+      b.BOOK_NAME AS BOOK_NAME, b.BOOK_GENRE AS BOOK_GENRE, b.BOOK_STORY AS BOOK_STORY, 
+      b.BOOK_PDATE AS BOOK_PDATE, b.BOOK_SALEPRICE AS BOOK_SALEPRICE, b.BOOK_CNT AS BOOK_CNT, b.BOOK_SCORE AS BOOK_SCORE, b.BOOK_SCORECOUNT AS BOOK_SCORECOUNT, b.BOOK_SCORE/b.BOOK_SCORECOUNT AS BOOK_SCOREDIVIDEBYCOUNT,
+      w.WRITER_ID AS WRITER_ID, w.WRITER_NAME AS WRITER_NAME
+      FROM BOOK b JOIN WRITER w 
+      ON b.WRITER_ID = w.WRITER_ID
+      WHERE BOOK_ID = #{bookId}
+   </select>
+   
+   <select id="searchList" resultType="book" parameterType="hashmap">
+   SELECT b.BOOK_ID AS BOOK_ID, b.WRITER_ID AS WRITER_ID, b.BOOK_PRICE AS BOOK_PRICE, 
+   b.BOOK_NAME AS BOOK_NAME, b.BOOK_GENRE AS BOOK_GENRE, b.BOOK_STORY AS BOOK_STORY, 
+   b.BOOK_PDATE AS BOOK_PDATE, b.BOOK_SALEPRICE AS BOOK_SALEPRICE, b.BOOK_CNT AS BOOK_CNT, b.BOOK_SCORE AS BOOK_SCORE, b.BOOK_SCORECOUNT AS BOOK_SCORECOUNT, b.BOOK_SCORE/b.BOOK_SCORECOUNT AS BOOK_SCOREDIVIDEBYCOUNT,
+   w.WRITER_ID AS WRITER_ID, w.WRITER_NAME AS WRITER_NAME
+   FROM BOOK b JOIN WRITER w 
+   ON b.WRITER_ID = w.WRITER_ID
+   WHERE REGEXP_LIKE (BOOK_NAME, '(*)'||#{searchWord}||'(*)') OR REGEXP_LIKE (WRITER_NAME, '(*)'||#{searchWord}||'(*)') OR REGEXP_LIKE (BOOK_GENRE, '(*)'||#{searchWord}||'(*)')
+   order by b.BOOK_SCORE/b.BOOK_SCORECOUNT desc
+   </select>
+
+	<select id="selectBannerBook" resultType="book" parameterType="book">
+		<![CDATA[
+			select BOOK_ID, WRITER_ID, BOOK_PRICE, BOOK_NAME, BOOK_GENRE, BOOK_STORY, BOOK_PDATE, BOOK_SALEPRICE, BOOK_SCORE, BOOK_SCORECOUNT
+			from (select rownum, BOOK_ID, WRITER_ID, BOOK_PRICE, BOOK_NAME, BOOK_GENRE, BOOK_STORY, BOOK_PDATE, BOOK_SALEPRICE, BOOK_SCORE, BOOK_SCORECOUNT
+			from(select *
+			from book
+			order by BOOK_PDATE DESC)
+			where rownum <= 6)
+		]]>
+	</select>
+   	<select id="selectBestSeller" resultType="book">
+		<![CDATA[
+			select b.BOOK_ID AS BOOK_ID, b.WRITER_ID AS WRITER_ID, b.BOOK_PRICE AS BOOK_PRICE, 
+	     	 b.BOOK_NAME AS BOOK_NAME, b.BOOK_GENRE AS BOOK_GENRE, b.BOOK_STORY AS BOOK_STORY, 
+	    	  b.BOOK_PDATE AS BOOK_PDATE, b.BOOK_SALEPRICE AS BOOK_SALEPRICE, b.BOOK_CNT AS BOOK_CNT, b.BOOK_SCORE AS BOOK_SCORE,
+	      	w.WRITER_ID AS WRITER_ID, w.WRITER_NAME AS WRITER_NAME
+			from book b
+			inner join writer w
+			on b.writer_id = w.writer_id
+			where book_id in (select book_id
+			from (
+			select rownum, book_id
+			from (select book_id, sum(buy_cnt) as buy_cnt
+			                            from buy
+			                            group by book_id
+			                            order by buy_cnt desc)
+			where rownum<=6
+			))
+		 ]]>
+	</select>
+	<update id="updateBookSocreByDeletePrevRecord" parameterType="review">
+		update book
+		set book_score = book_score - #{buyreviewScore},
+		    book_scorecount = book_scorecount - 1
+		where book_id = #{bookId}
+	</update>
+	<update id="updateBookScore" parameterType="review">
+		update book
+		set book_score = book_score + #{buyreviewScore},
+		    book_scorecount = book_scorecount + 1
+		where book_id = #{bookId}	
+	</update>
+	   <!-- 관련 도서 4개까지만 불러옴 -->
+   <select id="selectRelatedBook" resultType="book" parameterType="book">
+   <![CDATA[
+   SELECT b.BOOK_ID AS BOOK_ID, b.WRITER_ID AS WRITER_ID, b.BOOK_PRICE AS BOOK_PRICE, 
+   b.BOOK_NAME AS BOOK_NAME, b.BOOK_GENRE AS BOOK_GENRE, b.BOOK_STORY AS BOOK_STORY, 
+   b.BOOK_PDATE AS BOOK_PDATE, b.BOOK_SALEPRICE AS BOOK_SALEPRICE, b.BOOK_CNT AS BOOK_CNT, b.BOOK_SCORE AS BOOK_SCORE, b.BOOK_SCORECOUNT AS BOOK_SCORECOUNT, b.BOOK_SCORE/b.BOOK_SCORECOUNT AS BOOK_SCOREDIVIDEBYCOUNT,
+   w.WRITER_ID AS WRITER_ID, w.WRITER_NAME AS WRITER_NAME
+   FROM BOOK b JOIN WRITER w 
+   ON b.WRITER_ID = w.WRITER_ID
+   WHERE (BOOK_ID!= #{bookId} AND rownum <= 4) and (REGEXP_LIKE (BOOK_GENRE, '(*)'||#{bookGenre}||'(*)') OR REGEXP_LIKE (WRITER_NAME, '(*)'||#{writerName}||'(*)'))
+   order by book_score desc
+    ]]>
+   </select>
+</mapper>

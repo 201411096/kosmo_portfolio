@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="findHospitalDAO">
+	<!-- mybatis 자료형 : int / hashmap / string -->
+	
+<!-- 전체 동물 병원 리스트 가져오기 -->
+<select id="getFindHospitalList" parameterType="hashmap" resultType="findHospital">
+select findhospital_name, findhospital_tel, findhospital_address, findhospital_openhour
+from FINDHOSPITAL
+</select>
+
+<!-- 동물 병원 페이징 처리 -->
+<select id="getFindHospitalListWithPaging" parameterType="hashmap" resultType="findHospital">
+
+select findhospital_name, findhospital_tel, findhospital_address, findhospital_openhour
+from (
+	select findhospital_name, findhospital_tel, findhospital_address, findhospital_openhour, ROWNUM AS RNUM
+	from
+		(select findhospital_name, findhospital_tel, findhospital_address, findhospital_openhour
+		from findhospital
+		)
+	)
+<![CDATA[
+where RNUM>=#{startRow} and RNUM<=#{endRow}
+]]>
+</select>
+
+
+<!-- 지역별 검색 -->
+<select id="getFindHospitalListByLocation" parameterType="hashmap" resultType="findHospital">
+select findhospital_name, findhospital_tel, findhospital_address, findhospital_openhour
+from FINDHOSPITAL
+where SUBSTR(findhospital_address,1,2)=#{cityName} and SUBSTR(findhospital_address,4,2) = #{province}
+</select>
+
+<select id="getFindHospitalListByLocationWithPaging" parameterType="hashmap" resultType="findHospital">
+select findhospital_name, findhospital_tel, findhospital_address, findhospital_openhour
+from (
+	select findhospital_name, findhospital_tel, findhospital_address, findhospital_openhour, ROWNUM AS RNUM
+	from
+		(select findhospital_name, findhospital_tel, findhospital_address, findhospital_openhour
+			from findhospital
+			where SUBSTR(findhospital_address,1,2)=#{cityName} and SUBSTR(findhospital_address,4,2) = #{province}
+		)
+	)
+<![CDATA[
+where RNUM>=#{startRow} and RNUM<=#{endRow}
+]]>
+
+</select>
+
+
+
+
+<!--병원명, 검색어 typing해서 검색-->
+<select id="getFindHospitalListBySearch" parameterType="hashmap" resultType="findHospital">
+
+select findhospital_name, findhospital_tel, findhospital_address, findhospital_openhour
+from findhospital
+where findhospital_name like '%'||#{keyWord}||'%'
+or findhospital_tel like '%'||#{keyWord}||'%'
+or findhospital_address like '%'||#{keyWord}||'%'
+</select>  
+
+<select id="getFindHospitalListBySearchWithPaging" parameterType="hashmap" resultType="findHospital">
+
+select findhospital_name, findhospital_tel, findhospital_address, findhospital_openhour
+from (
+	select findhospital_name, findhospital_tel, findhospital_address, findhospital_openhour, ROWNUM AS RNUM
+	from
+		(select findhospital_name, findhospital_tel, findhospital_address, findhospital_openhour
+			from findhospital
+			where findhospital_name like '%'||#{keyWord}||'%'
+			or findhospital_tel like '%'||#{keyWord}||'%'
+			or findhospital_address like '%'||#{keyWord}||'%'
+		)
+	)
+<![CDATA[
+where RNUM>=#{startRow} and RNUM<=#{endRow}
+]]>
+</select>  
+
+
+<!-- 지도 검색  -->
+
+<!-- <select id="getFindHospitalForMap" parameterType="hashmap" resultType="findHospital">
+		select * from findHospital
+		where FINDHOSPITAL_ADDRESS
+		<if test = "searchName != ''">
+		and REGEXP_LIKE (FINDHOSPITAL_ADDRESS, '(*)'||#{searchName}||'(*)')
+		</if>
+		 
+	</select> -->
+
+
+</mapper>

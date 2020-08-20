@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="qnaDAO">
+
+	<insert id="insertQnaBoard" parameterType="qna">
+		INSERT INTO
+		QUESTIONBOARD
+		(QUESTIONBOARD_ID, QUESTIONBOARD_GROUP_ID,
+		QUESTIONBOARD_TITLE,
+		QUESTIONBOARD_CONTENT, QUESTIONBOARD_UPLOADTIME,
+		QUESTIONBOARD_READCOUNT, MEMBER_ID, QUESTIONBOARD_ANSWERFLAG)
+		VALUES
+		(QUESTIONBOARD_ID_SEQ.NEXTVAL, QUESTIONBOARD_GROUP_ID_SEQ.NEXTVAL,
+		#{questionboardTitle}, #{questionboardContent}, SYSDATE,
+		#{questionboardReadcount}+0, #{memberId}, #{questionboardAnswerflag})
+		<selectKey keyProperty="questionboardId" resultType="Integer" order="AFTER">
+			SELECT QUESTIONBOARD_ID_SEQ.currval FROM dual
+		</selectKey>
+	</insert>
+
+	<select id="getQnaBoardContent" parameterType="qna"
+		resultType="qna">
+		SELECT *
+		FROM QUESTIONBOARD
+		WHERE QUESTIONBOARD_ID =
+		#{questionboardId}
+	</select>
+
+	<update id="updateQna" parameterType="qna">
+		UPDATE QUESTIONBOARD
+		SET
+		QUESTIONBOARD_TITLE = #{questionboardTitle}, QUESTIONBOARD_CONTENT =
+		#{questionboardContent}
+		WHERE QUESTIONBOARD_ID = #{questionboardId}
+	</update>
+
+	<update id="updateReadcount" parameterType="qna">
+		UPDATE QUESTIONBOARD
+		SET QUESTIONBOARD_READCOUNT = QUESTIONBOARD_READCOUNT+1
+		WHERE
+		QUESTIONBOARD_ID = #{questionboardId}
+	</update>
+
+	<delete id="deleteQnaBoard">
+		DELETE
+		FROM QUESTIONBOARD
+		WHERE QUESTIONBOARD_ID =
+		#{questionboardId} 
+	</delete>
+
+	<select id="selectQnaBoardWithPaging" parameterType="hashmap"
+		resultType="qna">
+		SELECT *
+		FROM (
+		SELECT QUESTIONBOARD_ID, QUESTIONBOARD_GROUP_ID, QUESTIONBOARD_TITLE,
+		QUESTIONBOARD_CONTENT, QUESTIONBOARD_UPLOADTIME,
+		QUESTIONBOARD_READCOUNT,MEMBER_ID,QUESTIONBOARD_ANSWERFLAG,ROWNUM AS RNUM
+		FROM (SELECT QUESTIONBOARD_ID, QUESTIONBOARD_GROUP_ID,
+		QUESTIONBOARD_TITLE, QUESTIONBOARD_CONTENT, QUESTIONBOARD_UPLOADTIME,
+		QUESTIONBOARD_READCOUNT,MEMBER_ID,QUESTIONBOARD_ANSWERFLAG
+		FROM QUESTIONBOARD
+		<if test='searchType=="0"'>
+			WHERE REGEXP_LIKE(QUESTIONBOARD_TITLE, '(*)'|| #{searchWord} ||'(*)')
+			OR REGEXP_LIKE(QUESTIONBOARD_CONTENT, '(*)'|| #{searchWord} ||'(*)')
+		</if>
+		<if test='searchType=="1"'>
+			WHERE REGEXP_LIKE(QUESTIONBOARD_TITLE, '(*)'|| #{searchWord} ||'(*)')
+		</if>
+		<if test='searchType=="2"'>
+			WHERE REGEXP_LIKE(QUESTIONBOARD_CONTENT, '(*)'|| #{searchWord} ||'(*)')
+		</if>
+		<if test='searchType=="3"'>
+			WHERE REGEXP_LIKE(MEMBER_ID,'(*)'|| #{searchWord} ||'(*)')
+		</if>
+			order by QUESTIONBOARD_GROUP_ID DESC, QUESTIONBOARD_ANSWERFLAG asc, QUESTIONBOARD_ID 
+<!-- 		order by QUESTIONBOARD_GROUP_ID DESC, QUESTIONBOARD_ANSWERFLAG asc, QUESTIONBOARD_ID -->
+		))
+	<![CDATA[ 
+	where RNUM>=#{startRow} and RNUM<=#{endRow}
+	]]>
+	
+	</select>
+
+	<select id="selectKeyword" parameterType="hashmap"
+		resultType="qna">
+		SELECT *
+		FROM QUESTIONBOARD
+		<if test='searchType=="0"'>
+			WHERE REGEXP_LIKE(QUESTIONBOARD_TITLE, '(*)'|| #{searchWord} ||'(*)')
+			OR REGEXP_LIKE(QUESTIONBOARD_CONTENT, '(*)'|| #{searchWord} ||'(*)')
+		</if>
+		<if test='searchType=="1"'>
+			WHERE REGEXP_LIKE(QUESTIONBOARD_TITLE, '(*)'|| #{searchWord} ||'(*)')	
+		</if>
+		<if test='searchType=="2"'>
+			WHERE REGEXP_LIKE(QUESTIONBOARD_CONTENT, '(*)'|| #{searchWord} ||'(*)')
+		</if>
+		<if test='searchType=="3"'>
+			WHERE REGEXP_LIKE(MEMBER_ID,'(*)'|| #{searchWord} ||'(*)')
+		</if>
+		order by QUESTIONBOARD_GROUP_ID DESC, QUESTIONBOARD_ANSWERFLAG asc,QUESTIONBOARD_ID 
+	</select>
+
+	<insert id="insertReply" parameterType="qna">
+		INSERT INTO QUESTIONBOARD
+		(QUESTIONBOARD_ID, QUESTIONBOARD_GROUP_ID,
+		QUESTIONBOARD_TITLE,
+		QUESTIONBOARD_CONTENT, QUESTIONBOARD_UPLOADTIME,
+		QUESTIONBOARD_READCOUNT, MEMBER_ID,QUESTIONBOARD_ANSWERFLAG)
+		VALUES
+		(QUESTIONBOARD_ID_SEQ.NEXTVAL, #{questionboardGroupId},
+		#{questionboardTitle}, #{questionboardContent}, SYSDATE,
+		#{questionboardReadcount}+0, #{memberId},#{questionboardAnswerflag})
+	</insert>
+
+	<select id="selectGroupId" parameterType="qna" resultType="qna">
+		SELECT *
+		FROM QUESTIONBOARD
+		WHERE QUESTIONBOARD_GROUP_ID =
+		#{questionboardGroupId}
+	</select>
+
+	<select id="selectListRe" resultType="qna">
+		SELECT *
+		FROM QUESTIONBOARD
+		WHERE QUESTIONBOARD_GROUP_ID = #{questionboardGroupId}
+		ORDER BY
+		QUESTIONBOARD_GROUP_ID DESC, QUESTIONBOARD_ID
+	</select>
+	
+	<select id="getMemberflag" parameterType="map" resultType="map">
+		SELECT m.member_flag
+		FROM QUESTIONBOARD q, MEMBER m
+		WHERE q.member_id=m.member_id
+	
+	</select>
+	
+	<select id="selectQuestionGroupId" parameterType="qna" resultType="qna">
+		SELECT QUESTIONBOARD_GROUP_ID 
+		FROM QUESTIONBOARD
+		WHERE member_id=#{memberId}
+	</select>
+	
+	<delete id="deleteQnaBoardbyGroupId">
+		DELETE
+		FROM QUESTIONBOARD
+		WHERE QUESTIONBOARD_GROUP_ID = #{questionboardGroupId}
+	</delete>
+
+</mapper>

@@ -1,0 +1,194 @@
+ 
+ /* ----------------
+ Footer section
+  ---------------------*/
+ /*
+ @font-face { 
+ font-family: 'MapoFlowerIsland'; 
+ src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoFlowerIslandA.woff') format('woff'); 
+ font-weight: normal; font-style: normal; 
+ }
+ 
+.col-lg-4{
+	font-family: 'MapoFlowerIsland'; 
+ }
+ */
+ 
+ /*footer 자리 고정*/
+.footer-section{
+	margin-left:5%;
+	padding-bottom: -20%;
+}
+.footer {
+   width:100%;
+   height:100px;
+   position:absolute;
+   bottom:0;
+   background:#5eaeff;
+  text-align: center;
+  color: #f6f7f9;
+}
+
+.sp-container{
+	margin-top: -10%;
+}
+
+body{
+	font-family: 'NanumSquare', sans-serif !important; 
+}
+.col-lg-5 h5{
+	
+	font-size: 25px;
+	margin-left: 5%;
+}
+
+.col-lg-5 p{
+	font-size: 12px;
+	margin-left: 5%;
+}
+
+.col-lg-7{
+	margin-top: 1%;
+	font-size: 18px;
+	color: black;
+}
+
+#community,#member,#shop,#qna{
+	color: black;
+}
+
+#community:hover,#member:hover,#shop:hover,#qna:hover{
+	color: gray;
+}
+
+#qnaContent{
+	font-size: 16px;
+	margin-bottom: 5%;
+}
+
+.footer-section {
+	margin-top: 5%;
+	background: #fff;
+	height: 20%;
+}
+
+.footer-text {
+	margin-top:3%;
+  padding-right: 50px;
+}
+
+.footer-text h2 {
+  color: #404040;
+  margin-bottom: 17px;
+}
+
+.footer-text p {
+  font-size: 16px;
+}
+
+.copyright {
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  margin-top: 150px;
+/*   padding-left: 15px; */
+}
+
+#searchInput-container #searchSomething{
+    width:100%;
+    display: block;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 17px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border-style:none;
+    border: 1px solid #b3b3b3;
+    border-radius: 10px;
+    margin-top:100px;
+  
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+
+@media screen and (max-width: 768px){
+
+body{
+	font-family: 'NanumSquare', sans-serif !important; 
+}
+
+.footer-section{
+	height:100%;
+	margin-left:5%;
+	padding-top: 20%;
+ 	margin-top: -65%;
+}
+
+.col-lg-5 h5{
+	margin-top:70%;
+	font-size: 18px;
+	margin-left: 5%;
+}
+
+.col-lg-5 p{
+	font-size: 12px;
+	margin-left: 5%;
+}
+
+.col-lg-7{
+	margin-top: 1%;
+	font-size: 16px;
+	color: black;
+	margin-bottom: -50%;
+}
+
+.copyright {
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  margin-top: 50px;
+/*   padding-left: 15px; */
+}
+
+#qnaContent{
+	font-size: 12px;
+	margin-bottom: 5%;
+}
+
+.footer-text {
+  padding-right: 50px;
+}
+
+.footer-text p {
+  font-size: 10px;
+}
+.row m-0.m-0{
+	height: 10px;
+}
+
+#searchInput-container #searchSomething{
+    width:100%;
+    display: block;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 17px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border-style:none;
+    border: 1px solid #b3b3b3;
+    border-radius: 10px;
+    margin-top:100px;
+  
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+
+}

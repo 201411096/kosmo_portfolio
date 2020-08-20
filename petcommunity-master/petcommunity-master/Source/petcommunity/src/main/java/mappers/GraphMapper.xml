@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="graphDAO">
+	<select id="getLostGraph" resultType="map" parameterType="map">
+		select count(*) as count, time from (
+		    select lostboard_id, to_char(lostboard_uploadtime, #{timeOption}) as time from lostboard
+		)group by time order by time		
+	</select>
+	<select id="getFindGraphFromLostBoard" resultType="map" parameterType="map">
+		select count, time from(
+			select count(*) as count, time from (
+			    select lostboard_id, to_char(lostboard_findtime, #{timeOption}) as time from lostboard where lostboard_status = '찾음'
+			)group by time order by time
+		)where time is not null
+	</select>
+	<select id="makeSalesHistoryChartWithGrouping" resultType="map" parameterType="map">
+		select sum(buylist_totalprice) as sum, time from (
+	    	select buylist_totalprice, to_char(buylist_date, #{timeOption}) as time from buylist
+		)group by time order by time
+	</select>
+	<select id="makeSalesHistoryChart" resultType="map" parameterType="map">
+		select day, sum(price) as price from(
+		    select to_char(day, #{timeOption}) as day, price from (
+		    <![CDATA[
+		        select buylist_date as day, buylist_totalprice as price from buylist where buylist_date >= to_date(#{startDate}, 'yymmddhh24miss') and buylist_date <= to_date(#{endDate}, 'yymmddhh24miss')
+		       ]]> 
+		    )
+		) group by day order by day
+	</select>
+	<select id="makeSalesHistoryChartGroupByCategory" resultType="map" parameterType="map">
+	select * from
+	    (
+	        select price, feature, rownum from
+	            (
+	                select price, feature from(
+	                    select sum(buylist_totalprice) as price, product_feature as feature 
+	                    from buylistview
+	                    <![CDATA[
+	                    where buylist_date >= to_date(#{startDate}, 'yymmddhh24miss') and buylist_date <= to_date(#{endDate}, 'yymmddhh24miss')
+	                    ]]>
+	                    group by product_feature
+	                ) order by price desc
+	             
+	            )<!-- 	            <![CDATA[ where rownum<=2 ]]> --> 
+	    ) order by feature asc
+	</select>
+</mapper>

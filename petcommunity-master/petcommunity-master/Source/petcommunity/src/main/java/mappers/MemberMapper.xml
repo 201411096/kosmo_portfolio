@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+
+<insert id="signup" parameterType="member">
+
+insert into MEMBER(MEMBER_ID,MEMBER_PASSWORD,MEMBER_NAME,MEMBER_ADDRESS,MEMBER_TEL,MEMBER_EMAIL,MEMBER_BIRTHDAY,MEMBER_FLAG) 
+values(#{memberId},#{memberPassword},#{memberName},#{memberAddress},#{memberTel},#{memberEmail},#{memberBirthday},0)
+
+</insert>
+
+<select id="idcheck" parameterType="member" resultType="java.lang.Integer">
+SELECT NVL(COUNT(*),0)
+FROM MEMBER
+WHERE MEMBER_ID=#{memberId}
+</select>
+
+<select id="signin" parameterType="member" resultType="member">
+select * from MEMBER where MEMBER_PASSWORD=#{memberPassword} and MEMBER_ID=#{memberId}
+</select>
+
+<select id="memberList" parameterType="String" resultType="member">
+	select * from member where member_id = #{id}
+</select>
+
+<update id="updateMember" parameterType="member" >
+update member set member_id=#{memberId}, member_tel=#{memberTel}, member_password=#{memberPassword}, member_email=#{memberEmail},member_name=#{memberName},
+member_address=#{memberAddress} where member_id = #{memberId}
+</update>
+
+
+<update id="tokenInsert" parameterType="member">
+UPDATE MEMBER SET MEMBER_TOKEN = #{memberToken} WHERE MEMBER_ID = #{memberId}
+</update>
+
+<select id="selectPeopleAroundLocation" parameterType="lostBoard" resultType="member">
+SELECT *
+FROM MEMBER
+WHERE (MEMBER_X BETWEEN #{lostboardX}-0.019 AND #{lostboardX}+0.019)
+    		AND (MEMBER_Y BETWEEN #{lostboardY}-0.022 AND #{lostboardY}+0.022)
+</select>
+
+
+<select id="selectListPushTarget" parameterType="string" resultType="string">
+	SELECT MEMBER_TOKEN
+	FROM MEMBER
+	WHERE MEMBER_ID = #{lostBoardWriter}
+</select>
+
+<select id="findMemberId" parameterType="member" resultType="member">
+select * from member where member_email=#{memberEmail} and member_Name=#{memberName}
+</select>
+
+<select id="findMemberPass" parameterType="member" resultType="member">
+select * from member where member_id=#{memberid} and member_email=#{memberEmail}
+</select>
+
+<update id="makeTemporaryPassword" parameterType="member">
+	update member set member_password=#{memberPassword} where member_id=#{memberId} and member_email=#{memberEmail}
+</update>
+
+<update id="insertLocationInfo" parameterType="member">
+UPDATE MEMBER SET MEMBER_X = #{memberX}, MEMBER_Y = #{memberY} WHERE MEMBER_ID = #{memberId}
+</update>
+
+<select id="getMemberList" parameterType="hashmap" resultType="member">
+SELECT *
+FROM(
+	SELECT ROWNUM AS RNUM, MEMBER_ID, MEMBER_PASSWORD, MEMBER_NAME, MEMBER_ADDRESS, MEMBER_TEL, MEMBER_EMAIL, MEMBER_BIRTHDAY, MEMBER_FLAG, MEMBER_TOKEN, MEMBER_X, MEMBER_Y
+	FROM MEMBER
+	WHERE MEMBER_ID LIKE '%'||#{searchNew}||'%' AND MEMBER_ID != #{id}
+	)
+<![CDATA[
+WHERE RNUM>#{startPage} AND RNUM <=#{endPage}
+]]> 
+</select>
+</mapper>
