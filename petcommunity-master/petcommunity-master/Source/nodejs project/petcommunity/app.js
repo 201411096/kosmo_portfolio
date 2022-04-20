@@ -1,5 +1,6 @@
 var today = new Date();
 today = today.getFullYear().toString()+(today.getMonth()+1).toString()+today.getDate().toString();
+
 const schedule = require('node-schedule');
 const https = require('https');
 const fs = require('fs');
